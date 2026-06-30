@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's Your Ivy Edge? | Student Assessment</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('vfTPp_kUt7gUwLOjY');</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #000000;
+      --gold:   #C9A84C;
+      --light:  #FFF5DB;
+      --white:  #FFFDF9;
+      --mid:    #DDD8CE;
+      --text:   #2C2C2C;
+      --radius: 12px;
+
+      /* Personality colors */
+      --cool-blue:    #0000FF;
+      --royal-purple: #4B0082;
+      --fiery-red:    #FF0F0F;
+      --rad-orange:   #FF5B00;
+      --sun-gold:     #EFBF04;
+      --sooth-lime:   #96c100;
+      --earth-green:  #185E3F;
+      --prag-teal:    #069494;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      background: #000000;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--white); font-weight: normal; }
+    .logo-img {
+      height: 36px;
+      width: auto;
+      vertical-align: middle;
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 780px;
+      padding: 48px 24px 80px;
+      animation: fadeIn 0.35s ease;
+    }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── WELCOME ── */
+    .welcome-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .welcome-hero h1 {
+      font-size: 2.2rem;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .welcome-hero h1 em { color: var(--gold); font-style: normal; }
+    .welcome-hero .subtitle {
+      font-size: 1.05rem;
+      color: #555;
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .color-strip {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 24px auto;
+      flex-wrap: wrap;
+    }
+    .color-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .instr-card {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 36px;
+      line-height: 1.75;
+      font-size: 0.97rem;
+    }
+    .instr-card h2 { font-size: 1rem; color: var(--navy); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .instr-card ol { padding-left: 20px; }
+    .instr-card ol li { margin-bottom: 8px; }
+    .name-input-wrap { text-align: center; margin-bottom: 20px; }
+    .name-input-wrap label { display: block; font-size: 0.9rem; color: #555; margin-bottom: 6px; }
+    .name-input-wrap input {
+      padding: 10px 16px;
+      border: 1.5px solid var(--mid);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      width: 280px;
+      max-width: 90%;
+    }
+    .notify-status { margin-top: 10px; font-size: 0.85rem; color: #666; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: #276cc0; }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: bold;
+    }
+    .btn-gold:hover { background: #276cc0; }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+    }
+    .btn-outline:hover { background: #276cc0; color: var(--white); }
+    .btn-sm { padding: 10px 22px; font-size: 0.9rem; }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      margin-bottom: 32px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 8px;
+      font-family: Arial, sans-serif;
+    }
+    .progress-bar {
+      height: 6px;
+      background: var(--mid);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── ROUND ── */
+    .round-header {
+      margin-bottom: 22px;
+    }
+    .round-tag {
+      display: inline-block;
+      background: var(--navy);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+    }
+    .round-header h2 {
+      font-size: 1.45rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .round-header p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* ── SORTABLE LIST ── */
+    .sort-list {
+      list-style: none;
+      margin: 20px 0 28px;
+    }
+    .sort-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 1.5px solid var(--mid);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: grab;
+      user-select: none;
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .sort-item:active { cursor: grabbing; }
+    .sort-item.sortable-ghost {
+      opacity: 0.35;
+      background: var(--light);
+    }
+    .sort-item.sortable-chosen {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+      border-color: var(--gold);
+      transform: scale(1.02);
+    }
+    .rank-badge {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--light);
+      border: 1.5px solid var(--mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      color: #888;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .sort-item:first-child .rank-badge { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+    .sort-item:last-child .rank-badge { background: var(--mid); color: #999; }
+    .drag-handle {
+      color: var(--mid);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      cursor: grab;
+    }
+    .item-text {
+      flex: 1;
+      font-size: 0.97rem;
+      line-height: 1.45;
+    }
+    .score-hint {
+      font-family: Arial, sans-serif;
+      font-size: 0.78rem;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+    .sort-item:first-child .score-hint { color: #276cc0; font-weight: bold; }
+
+    /* Rank legend */
+    .rank-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-family: Arial, sans-serif;
+      color: #aaa;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+    .rank-legend strong { color: var(--navy); }
+
+    /* ── NAVIGATION ── */
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── RESULTS ── */
+    .results-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .results-header h1 { font-size: 1.9rem; color: var(--navy); margin-bottom: 8px; }
+    .results-header h1 em { color: var(--gold); font-style: normal; }
+    .results-header p { color: #666; font-size: 0.97rem; line-height: 1.6; }
+
+    .color-result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 560px) {
+      .color-result-grid { grid-template-columns: 1fr; }
+      .welcome-hero h1 { font-size: 1.7rem; }
+    }
+
+    .color-card {
+      background: var(--white);
+      border: 2px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .color-card.primary {
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .color-card .accent-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+    }
+    .color-card .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .color-card .color-name {
+      font-size: 0.82rem;
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: bold;
+    }
+    .color-card .archetype {
+      font-size: 1.1rem;
+      color: var(--navy);
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .color-card .score-display {
+      font-family: Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--navy);
+    }
+    .color-card.primary .score-display { font-size: 1.6rem; }
+    .score-bar-wrap {
+      height: 8px;
+      background: var(--light);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 1s ease;
+    }
+    .primary-badge {
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* Full profile section */
+    .profile-section {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .profile-section .profile-header {
+      padding: 24px 28px 20px;
+      color: var(--white);
+    }
+    .profile-header h2 { font-size: 1.6rem; margin-bottom: 4px; }
+    .profile-header .sub { font-size: 0.9rem; opacity: 0.85; }
+    .profile-body { padding: 24px 28px; }
+    .profile-body p { font-size: 0.96rem; line-height: 1.75; margin-bottom: 18px; color: var(--text); }
+    .profile-body p:last-child { margin-bottom: 0; }
+
+    .trait-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 500px) { .trait-grid { grid-template-columns: 1fr; } }
+    .trait-item {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .trait-item .trait-label {
+      font-family: Arial, sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .trait-item .trait-value {
+      font-size: 0.9rem;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .affirmations {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-top: 18px;
+    }
+    .affirmations h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      font-family: Arial, sans-serif;
+      margin-bottom: 10px;
+    }
+    .affirmations ul {
+      list-style: none;
+      padding: 0;
+    }
+    .affirmations ul li {
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .affirmations ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* Personal Thoughts */
+    .personal-thoughts {
+      margin-top: 24px;
+    }
+    .personal-thoughts h3 {
+      font-family: Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--mid);
+    }
+    .pt-section {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .pt-section h4 {
+      font-family: Arial, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .pt-section ul { list-style: none; padding: 0; }
+    .pt-section ul li {
+      font-size: 0.9rem;
+      color: var(--navy);
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 5px;
+    }
+    .pt-section ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #aaa;
+      font-family: Arial, sans-serif;
+      margin: 32px 0 0;
+      line-height: 1.5;
+    }
+
+    .restart-row { text-align: center; margin-top: 32px; }
+
+    /* Touch hint */
+    .touch-hint {
+      font-family: Arial, sans-serif;
+      font-size: 0.78rem;
+      color: #aaa;
+      text-align: center;
+      margin: -12px 0 18px;
+    }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--mid); margin: 32px 0; }
+
+    /* Secondary profiles toggle */
+    .secondary-title {
+      font-size: 1rem;
+      color: var(--navy);
+      margin: 32px 0 16px;
+    }
+
+    details.secondary-profile {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    details.secondary-profile summary {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.97rem;
+      font-weight: bold;
+      color: var(--navy);
+      list-style: none;
+    }
+    details.secondary-profile summary::-webkit-details-marker { display: none; }
+    details.secondary-profile summary .summary-score {
+      margin-left: auto;
+      font-family: Arial, sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    details.secondary-profile .secondary-body {
+      padding: 0 20px 18px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #444;
+      border-top: 1px solid var(--light);
+    }
+    .color-swatch {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    }
+    details.secondary-profile summary::after {
+      content: '▸';
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-left: 8px;
+    }
+    details[open].secondary-profile summary::after { content: '▾'; }
+
+    /* Print */
+    @media print {
+      header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .btn, .nav-row, .restart-row { display: none; }
+      .screen { display: block !important; }
+      #welcome-screen, #quiz-screen { display: none !important; }
+      #results-screen { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><img src="IvyEdgeGoldWhite.png" alt="The Ivy Edge" class="logo-img"> <span>| Personality Assessment Quiz</span></div>
+</header>
+
+<!-- ══════════════ WELCOME SCREEN ══════════════ -->
+<div id="welcome-screen" class="screen active">
+  <div class="welcome-hero">
+    <h1>What's Your <em>Ivy Edge?</em></h1>
+    <p class="subtitle">A personal communication style assessment that reveals how you think, connect, and lead — and how to use it to your advantage.</p>
+    <div class="color-strip">
+      <span class="color-dot" style="background:var(--cool-blue)" title="Observer · Cool Blue"></span>
+      <span class="color-dot" style="background:var(--royal-purple)" title="Reformer · Royal Purple"></span>
+      <span class="color-dot" style="background:var(--fiery-red)" title="Director · Fiery Red"></span>
+      <span class="color-dot" style="background:var(--rad-orange)" title="Motivator · Radiant Orange"></span>
+      <span class="color-dot" style="background:var(--sun-gold)" title="Inspirer · Sunshine Gold"></span>
+      <span class="color-dot" style="background:var(--sooth-lime)" title="Helper · Soothing Lime"></span>
+      <span class="color-dot" style="background:var(--earth-green)" title="Supporter · Earth Green"></span>
+      <span class="color-dot" style="background:var(--prag-teal)" title="Coordinator · Pragmatic Teal"></span>
+    </div>
+  </div>
+
+  <div class="instr-card">
+    <h2>How It Works</h2>
+    <ol>
+      <li>You'll complete <strong>10 rounds</strong>, each with 8 words or statements.</li>
+      <li>In each round, <strong>drag and drop</strong> the items to rank them — most like you at the top, least like you at the bottom.</li>
+      <li>There are no right or wrong answers. Go with your gut — your first instinct is usually your truest one.</li>
+      <li>At the end, you'll receive a detailed profile of your personal communication style and what makes you unique.</li>
+    </ol>
+  </div>
+
+  <div class="name-input-wrap">
+    <label for="student-name">Enter your name to begin</label>
+    <input type="text" id="student-name" placeholder="Your full name">
+  </div>
+
+  <div style="text-align:center;">
+    <button class="btn btn-gold" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ SCREEN ══════════════ -->
+<div id="quiz-screen" class="screen">
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-text">Round 1 of 10</span>
+      <span id="progress-pct">10%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:10%"></div>
+    </div>
+  </div>
+
+  <div class="round-header">
+    <div class="round-tag" id="round-tag">Round 1 · Words</div>
+    <h2 id="round-title">Rank these words from most to least like you</h2>
+    <p id="round-subtitle">Drag items so the word that <strong>best</strong> describes you is at the top, and the word that <strong>least</strong> describes you is at the bottom.</p>
+  </div>
+
+  <div class="rank-legend">
+    <strong>↑ Most like me</strong>
+    <span>Least like me ↓</span>
+  </div>
+  <div class="touch-hint">✦ Drag items to reorder them</div>
+
+  <ul class="sort-list" id="sort-list"></ul>
+
+  <div class="nav-row">
+    <button class="btn btn-outline btn-sm" id="prev-btn" onclick="prevRound()">← Back</button>
+    <button class="btn btn-primary" id="next-btn" onclick="nextRound()">Next Round →</button>
+  </div>
+</div>
+
+<!-- ══════════════ RESULTS SCREEN ══════════════ -->
+<div id="results-screen" class="screen">
+  <div class="results-header">
+    <h1>Your Ivy <em>Edge Profile</em></h1>
+    <p>Based on your rankings across all 10 rounds, here's how your communication style breaks down.</p>
+  </div>
+
+  <div class="color-result-grid" id="score-grid"></div>
+
+  <hr class="divider">
+  <div id="primary-profile"></div>
+
+  <h3 class="secondary-title">Your Other Dimensions</h3>
+  <div id="secondary-profiles"></div>
+
+  <div class="disclaimer">
+    This assessment is intended as a reflective tool, not a definitive label.<br>
+    Your profile may shift as you grow — and that's the whole point.
+  </div>
+
+  <div class="restart-row">
+    <button class="btn btn-outline btn-sm" onclick="restartQuiz()">Retake Assessment</button>
+    &nbsp;
+    <button class="btn btn-primary btn-sm" onclick="window.print()">Print Results</button>
+    &nbsp;
+    <button class="btn btn-gold btn-sm" id="notify-btn" onclick="notifyInstructor()">Notify Instructor</button>
+    <p class="notify-status" id="notify-status"></p>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+const ROUNDS = [
+  {
+    tag: "Round 1 · Words",
+    title: "Rank these words from most to least like you",
+    subtitle: "Drag items so the word that <strong>best</strong> describes you is at the top, and the word that <strong>least</strong> describes you is at the bottom.",
+    items: [
+      { letter: 'A', text: 'Observant' },
+      { letter: 'B', text: 'Results-Driven' },
+      { letter: 'C', text: 'Single-Minded' },
+      { letter: 'D', text: 'Charismatic' },
+      { letter: 'E', text: 'Sociable' },
+      { letter: 'F', text: 'Warm' },
+      { letter: 'G', text: 'Cooperative' },
+      { letter: 'H', text: 'Objective' },
+    ]
+  },
+  {
+    tag: "Round 2 · Roles",
+    title: "Which role fits you best?",
+    subtitle: "Drag items so the role that <strong>most</strong> resonates with who you are is at the top.",
+    items: [
+      { letter: 'A', text: 'Organizer' },
+      { letter: 'B', text: 'Explorer' },
+      { letter: 'C', text: 'Taskmaster' },
+      { letter: 'D', text: 'Entertainer' },
+      { letter: 'E', text: 'Life of the Party' },
+      { letter: 'F', text: 'Listener' },
+      { letter: 'G', text: 'Designated Driver' },
+      { letter: 'H', text: 'Problem-Solver' },
+    ]
+  },
+  {
+    tag: "Round 3 · Traits",
+    title: "Rank these traits from most to least like you",
+    subtitle: "Drag items so the trait that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'Tenacious' },
+      { letter: 'B', text: 'Blunt' },
+      { letter: 'C', text: 'Influential' },
+      { letter: 'D', text: 'Enthusiastic' },
+      { letter: 'E', text: 'Inspirational' },
+      { letter: 'F', text: 'Understanding' },
+      { letter: 'G', text: 'Refined' },
+      { letter: 'H', text: 'Disciplined' },
+    ]
+  },
+  {
+    tag: "Round 4 · Archetypes",
+    title: "Which role would you most naturally play on a team?",
+    subtitle: "Drag items so the role that feels <strong>most natural</strong> for you is at the top.",
+    items: [
+      { letter: 'A', text: 'Coach' },
+      { letter: 'B', text: 'Captain' },
+      { letter: 'C', text: 'Commander' },
+      { letter: 'D', text: 'CEO' },
+      { letter: 'E', text: 'Cheerleader' },
+      { letter: 'F', text: 'Counselor' },
+      { letter: 'G', text: 'Confidant' },
+      { letter: 'H', text: 'Case Worker' },
+    ]
+  },
+  {
+    tag: "Round 5 · Words",
+    title: "Rank these words from most to least like you",
+    subtitle: "Drag items so the word that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'Gingerly' },
+      { letter: 'B', text: 'Efficient' },
+      { letter: 'C', text: 'Purposeful' },
+      { letter: 'D', text: 'Dynamic' },
+      { letter: 'E', text: 'Easygoing' },
+      { letter: 'F', text: 'Positive' },
+      { letter: 'G', text: 'Hospitable' },
+      { letter: 'H', text: 'Orderly' },
+    ]
+  },
+  {
+    tag: "Round 6 · Statements",
+    title: "Rank these statements from most to least true for you",
+    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'I like to be precise and straightforward.' },
+      { letter: 'B', text: 'I like to push myself to complete projects on time.' },
+      { letter: 'C', text: 'I like to put things into action.' },
+      { letter: 'D', text: 'I like to energize others into action.' },
+      { letter: 'E', text: 'I like to try out new ideas.' },
+      { letter: 'F', text: 'I like to advocate for the well-being of others.' },
+      { letter: 'G', text: 'I like to help other people.' },
+      { letter: 'H', text: 'I like to use trusted systems and methods to get work done.' },
+    ]
+  },
+  {
+    tag: "Round 7 · Statements",
+    title: "Rank these statements from most to least true for you",
+    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'I like to study every fact to see if it\'s true.' },
+      { letter: 'B', text: 'I like to be ethical in my decision-making process.' },
+      { letter: 'C', text: 'I like to do things rather than think about them.' },
+      { letter: 'D', text: 'I like to receive public praise for my good work efforts.' },
+      { letter: 'E', text: 'I like to act on my instincts and hunches.' },
+      { letter: 'F', text: 'I like to work at a measured pace.' },
+      { letter: 'G', text: 'I like to work in groups.' },
+      { letter: 'H', text: 'I like to work in calm and peaceful environments.' },
+    ]
+  },
+  {
+    tag: "Round 8 · Statements",
+    title: "Rank these statements from most to least true for you",
+    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'I like to organize and sort ideas and information.' },
+      { letter: 'B', text: 'I like to work on tasks to the point of perfection.' },
+      { letter: 'C', text: 'I like to get to the bottom of a problem.' },
+      { letter: 'D', text: 'I like to think about endless opportunities.' },
+      { letter: 'E', text: 'I like to think in pictures.' },
+      { letter: 'F', text: 'I like to be generous with my time and give to those in need.' },
+      { letter: 'G', text: 'I like to share my ideas with many people.' },
+      { letter: 'H', text: 'I like to be clear in my communication with others.' },
+    ]
+  },
+  {
+    tag: "Round 9 · Statements",
+    title: "Rank these statements from most to least true for you",
+    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'I like to think carefully about problems before doing something.' },
+      { letter: 'B', text: 'I like to set high standards for myself and achieve them.' },
+      { letter: 'C', text: 'I like places that have profound respect for history and tradition.' },
+      { letter: 'D', text: 'I like to persuade people to my point of view.' },
+      { letter: 'E', text: 'I like to think on my feet without much preparation.' },
+      { letter: 'F', text: 'I like to encourage people to become their best selves.' },
+      { letter: 'G', text: 'I like to go out of my way to care about others.' },
+      { letter: 'H', text: 'I like to be loyal to my teammates in order to achieve our goals.' },
+    ]
+  },
+  {
+    tag: "Round 10 · Final Statements",
+    title: "Last round — rank these statements from most to least true for you",
+    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    items: [
+      { letter: 'A', text: 'I like to understand the facts.' },
+      { letter: 'B', text: 'I like to be blunt with my feedback and critiques.' },
+      { letter: 'C', text: 'I like to always be on time.' },
+      { letter: 'D', text: 'I like to travel in my work and meet new people.' },
+      { letter: 'E', text: 'I like to often think about where I will be a few years from now.' },
+      { letter: 'F', text: 'I like to support social justice causes.' },
+      { letter: 'G', text: 'I like to listen carefully to what everyone has to say.' },
+      { letter: 'H', text: 'I like to weigh and measure all perspectives before deciding.' },
+    ]
+  }
+];
+
+// Rank position → score (index 0 = top = 15 pts)
+const SCORE_MAP = [15, 13, 11, 9, 7, 5, 3, 1];
+
+const PERSONALITIES = {
+  A: {
+    color: 'var(--cool-blue)',
+    colorName: 'Cool Blue',
+    archetype: 'The Observer',
+    shortDesc: 'Analytical, precise, and deeply thoughtful. You rely on facts and take pride in getting things exactly right.',
+    fullDesc: `If Cool Blue is your color, you're the person who actually reads the fine print — and probably highlights it, too. You think before you speak, lean on facts over feelings, and take genuine pride in getting things right. You rely on data over gut feelings, and accuracy matters to you — in your work, your words, and your decisions. Preparation is your superpower; you'd rather over-research than be caught off guard. You work best in calm, focused environments, and you tend to connect most easily with people who take things as seriously as you do.\n\nThe flip side? Owning a mistake can be tough. When you're wrong, your instinct is to go back and find more evidence rather than just move on. To the people who really know you, you are one of the most thoughtful and reliable people in the room. People who don't know you well, however, might read your quiet, measured style as cold or distant — but that's just you being thoughtful. Trust takes time for you, and that's completely okay.`,
+    traits: {
+      'Inner Drive': 'Doing things right, avoiding conflict with others',
+      'Goal': 'Correctness, predictability, the need to perceive and understand',
+      'Judges Others By': 'How people think',
+      'Influences Others By': 'Logical arguments, factual data',
+      'Value to a Team': 'Tests, clarifies, and evaluates',
+      'Over Uses': 'Analysis and research, what has worked before',
+      'Under Pressure': 'Worried, gets bogged down',
+      'Fear': 'Ridicule; abrupt change',
+      'More Effective With': 'Learning to decide without all the answers, greater understanding of people, enthusiasm',
+      'Opposite Style': 'Inspirer'
+    },
+    personalThoughts: {
+      likes: [
+        "I have a strong sense of integrity and do what I think is right, even when others disagree",
+        "I'm not motivated by appearances or what others think I should want",
+        "I'm able to see situations clearly and without letting emotions cloud my judgment"
+      ],
+      dislikes: [
+        "I sometimes come across as defensive or cynical, even when I don't mean to",
+        "I struggle to say exactly what I mean in the moment",
+        "Social situations I didn't opt into can feel exhausting and uncomfortable",
+        "It bothers me when people who don't work as carefully as I do still get ahead"
+      ],
+      neverDo: [
+        "Throw a surprise party or take a job in sales",
+        "Volunteer to be the host at a big social event",
+        "Spend my free time keeping up with celebrity drama"
+      ],
+      howToRelate: [
+        "Give me time alone to process my thoughts and feelings",
+        "Don't mistake my quietness for rudeness — I just move at my own pace",
+        "Be direct — I respect straightforwardness more than almost anything",
+        "When I seem frustrated, I'm almost always frustrated with myself"
+      ],
+      peopleSay: [
+        "\"They're a loner — but totally content spending hours deep in something that interests them.\"",
+        "\"Honestly, they're one of the most knowledgeable people I know.\"",
+        "\"They're quietly perceptive — they see things the rest of us walk right past.\""
+      ]
+    },
+    affirmations: [
+      "I'll approach others with openness instead of assumptions.",
+      "Letting people in actually helps me grow.",
+      "I don't have to win every intellectual exchange."
+    ]
+  },
+  B: {
+    color: 'var(--royal-purple)',
+    colorName: 'Royal Purple',
+    archetype: 'The Reformer',
+    shortDesc: 'Driven by excellence. You set the bar high, think fast, and can\'t understand why others wouldn\'t do the same.',
+    fullDesc: `Royal Purple Reformers are wired for excellence — and not the participation-trophy kind. You set the bar high for yourself and genuinely can't understand why others wouldn't do the same. Your mind moves fast, jumps between ideas, and almost always lands on a creative solution that no one else considered. You need space to think and the freedom to question — being micromanaged is basically your kryptonite.\n\nThe tension for Reformers is that the same drive that makes you exceptional can make you hard to be around. You can become blunt when frustrated, dismissive when your ideas are ignored, and slow to let go of a position even when the evidence says otherwise. Your standards, which are genuinely your greatest asset, can also make you hard on yourself and impatient with people who operate differently. Others might see you as intense or overbearing — but underneath that is someone who genuinely cares about doing things the right way.`,
+    traits: {
+      'Inner Drive': 'Deep thought and attention to the task',
+      'Goal': 'Striving for excellence',
+      'Judges Others By': 'How sharp and hardworking they are',
+      'Influences Others By': 'Efficiency and perfection',
+      'Value to a Team': 'Explores all avenues before making decisions',
+      'Over Uses': 'Self-criticism and the need to be in charge',
+      'Under Pressure': 'Overly critical, impatient, and negative',
+      'Fear': 'Disorganization and failure',
+      'More Effective With': 'Patience and understanding of how others like to work',
+      'Opposite Style': 'Helper'
+    },
+    personalThoughts: {
+      likes: [
+        "I'm self-disciplined and have a track record of actually getting things done",
+        "I'm always pushing myself to be the best version of who I can be",
+        "I'm reliable, responsible, and fully committed to what I take on",
+        "I don't compromise on ethics. I know what's right and I do it"
+      ],
+      dislikes: [
+        "I get genuinely frustrated when others don't match my effort level",
+        "I can get so intense about everything that I forget to breathe",
+        "I hold high expectations for myself and others, and the disappointment when they aren't met is real",
+        "I'm a perfectionist, and that's not always easy to live with or work alongside"
+      ],
+      neverDo: [
+        "Stop caring about my own interests",
+        "Show up late",
+        "Pretend criticism doesn't sting",
+        "Forgive myself quickly for a mistake"
+      ],
+      howToRelate: [
+        "Remind me that it's okay to take things a little less seriously sometimes",
+        "Recognize my effort, not just the outcome",
+        "Step in and help carry the load without me having to ask",
+        "Help me get out of my own head when I'm being too critical"
+      ],
+      peopleSay: [
+        "\"You can hand them an assignment and walk away. It'll be done, and done well.\"",
+        "\"They won't do something they believe is wrong. Period.\"",
+        "\"They set the standard. Everyone else is just trying to keep up.\""
+      ]
+    },
+    affirmations: [
+      "It's okay to laugh at myself sometimes.",
+      "Taking myself less seriously doesn't make me less serious about what matters.",
+      "I can make mistakes and still be someone worth looking up to."
+    ]
+  },
+  C: {
+    color: 'var(--fiery-red)',
+    colorName: 'Fiery Red',
+    archetype: 'The Director',
+    shortDesc: 'Built for action. Decisive, driven, and completely comfortable leading from the front.',
+    fullDesc: `Fiery Red Directors are built for action. You are decisive, driven, and completely comfortable leading from the front. Routine bores you. Rules that don't make sense frustrate you. You want authority, challenge, and the freedom to make things happen your way. When a problem needs solving, you cut straight to the point and push hard until it's done.\n\nThe thing about Directors is that your intensity, which is one of your greatest strengths, can feel like "a lot" to people who operate differently. You can come across as impatient, demanding, or even intimidating — especially when your standards aren't being met; others may feel bulldozed. Learning to slow down, listen, and make room for others' approaches isn't natural for you, but it's where your real growth lives. Your energy is genuinely powerful — the work is learning to channel it in ways that bring people with you rather than push them away.`,
+    traits: {
+      'Inner Drive': 'Take charge of the world around them and compete to win',
+      'Goal': 'Being in control, independence, and pushing for change',
+      'Judges Others By': 'Their ability to get the task done',
+      'Influences Others By': 'Force of character, persistence, and drive',
+      'Value to a Team': 'Bold attitude, imagination, and the drive to make things happen',
+      'Over Uses': 'Impatience, going it alone, and pushing too hard',
+      'Under Pressure': 'Aggressive, stubborn, and quick to push back',
+      'Fear': 'Losing control. Being seen as soft or not serious',
+      'More Effective With': 'Patience, genuine concern for others, and humility about the fact that they don\'t always have the right answer',
+      'Opposite Style': 'Supporter'
+    },
+    personalThoughts: {
+      likes: [
+        "When something needs to happen, I make it happen",
+        "The people close to me know I'll always have their back",
+        "I know who I am and I don't need anyone's approval to feel that way"
+      ],
+      dislikes: [
+        "My directness sometimes lands harder than I intend, and people pull away",
+        "Sitting with someone else's opinion long enough to really hear it is hard for me",
+        "Incompetence and slow movement make me impatient in ways I know aren't always fair"
+      ],
+      neverDo: [
+        "Genuinely mean it when I say 'let's do it your way'",
+        "Keep my opinion to myself when I know something is wrong",
+        "Play to tie"
+      ],
+      howToRelate: [
+        "Hold your ground with me — I respect confidence, not compliance",
+        "Know that I have a softer side, even if I don't lead with it",
+        "Loyalty matters more to me than almost anything",
+        "My bluntness is never personal — it's just efficiency"
+      ],
+      peopleSay: [
+        "\"I can say exactly what I'm thinking around them. They actually want that.\"",
+        "\"They lead clearly and fairly. You always know where you stand.\"",
+        "\"They'll say the uncomfortable thing that everyone else is thinking but won't say.\""
+      ]
+    },
+    affirmations: [
+      "Good relationships are worth bending for.",
+      "The first idea isn't always the best one — including mine.",
+      "Letting people see my softer side doesn't make me less strong."
+    ]
+  },
+  D: {
+    color: 'var(--rad-orange)',
+    colorName: 'Radiant Orange',
+    archetype: 'The Motivator',
+    shortDesc: 'The energy in the room. You inspire, rally, and make even reluctant crowds start to believe.',
+    fullDesc: `Radiant Orange Motivators are the energy in the room. You're at your best when you're around people — inspiring them, rallying them, getting them excited about what's possible. You're a natural communicator who can read a group, adapt on the fly, and make even a reluctant crowd start to believe. You don't just want to succeed; you want to succeed visibly, with a team behind you who feels good about what you've built together. Results matter to you, but so do the people you're working with — and that combination is rare.\n\nWhat Motivators have to watch is the tendency to be too optimistic — about what you can deliver, about how others will perform, about how long things will take. Your confidence is genuinely infectious, but it can occasionally outrun reality. You can also get bored quickly when the novelty wears off. The antidote is structure: a little more planning, a little more patience, and a little more attention to the details you'd rather skip. Slowing down to build structure isn't your favorite thing — but it's what turns your energy into lasting results.`,
+    traits: {
+      'Inner Drive': 'To express an enthusiastic and charismatic presence',
+      'Goal': 'Recognition and keeping an eye on the big picture',
+      'Judges Others By': 'Their own idea of what success looks like',
+      'Influences Others By': 'Enthusiasm for what\'s possible; recognition and praise',
+      'Value to a Team': 'Influences and inspires others to achieve their goals',
+      'Over Uses': 'Assertiveness and big-picture thinking at the expense of details',
+      'Under Pressure': 'Bored easily, impatient, and aggressive',
+      'Fear': 'Not being given real responsibility, and failure',
+      'More Effective With': 'Structure and follow-through, understanding how processes work, and slowing down enough to put things in writing',
+      'Opposite Style': 'Coordinator'
+    },
+    personalThoughts: {
+      likes: [
+        "I'm genuinely optimistic — problems don't knock me out for long",
+        "I go after the things that scare me a little. That's how I know they're worth it",
+        "I have a wide range of passions and I'm not afraid to pursue all of them",
+        "I lead with generosity"
+      ],
+      dislikes: [
+        "Inefficiency drives me crazy. I have very little patience for it",
+        "I sometimes perform a version of myself to make a good impression",
+        "There's never enough time to do everything I want to do",
+        "One-on-one intensity can feel confining to me after a while"
+      ],
+      neverDo: [
+        "Let a meeting run inefficiently when I could step in",
+        "Spend a week in complete silence",
+        "Finish every project before starting the next one",
+        "Plan my week in a spreadsheet and actually follow it"
+      ],
+      howToRelate: [
+        "Give me room to breathe — freedom and friendship go a long way with me",
+        "Keep me engaged with interesting conversation",
+        "Let me be a little extra sometimes — it's how I connect",
+        "Challenge me intellectually and make me laugh",
+        "Don't try to change me. Get to know me"
+      ],
+      peopleSay: [
+        "\"They make everyone feel like they matter.\"",
+        "\"When they're not doing something adventurous, they're helping someone else with something.\"",
+        "\"They're the person you call when you need to remember why life is good.\""
+      ]
+    },
+    affirmations: [
+      "I'll build in actual time to slow down.",
+      "I'll bring more balance into my life — not less enthusiasm, just more grounding.",
+      "Depth matters as much as breadth."
+    ]
+  },
+  E: {
+    color: 'var(--sun-gold)',
+    colorName: 'Sunshine Gold',
+    archetype: 'The Inspirer',
+    shortDesc: 'Outgoing, enthusiastic, and genuinely magnetic. You make rooms feel different when you walk in.',
+    fullDesc: `Sunshine Gold Inspirers are the people who make rooms feel different when they walk in. You are outgoing, enthusiastic, and genuinely magnetic — people are drawn to your energy without always being able to explain why. You build friendships fast, light up social spaces, and have a gift for making others feel seen and excited. You have a wide circle of acquaintances, and your ability to network and connect is something others genuinely admire and often can't quite replicate. You don't just promote your ideas; you make people want to believe in them too.\n\nThe challenge for Inspirers is that your energy can scatter. You leap into things with excitement and sometimes skip the step where you gather all the information first. You may start more things than you finish, take on more than you can realistically manage, and struggle to stay consistent when the initial excitement fades. Time and follow-through are the skills that will turn your natural magnetism into something lasting.`,
+    traits: {
+      'Inner Drive': 'Wanting to connect with and be accepted by others',
+      'Goal': 'Popularity and approval',
+      'Judges Others By': 'How well they communicate and how much they care about people',
+      'Influences Others By': 'Praise and favors',
+      'Value to a Team': 'Lightens the mood; lifts others up and isn\'t afraid to advocate for themselves too',
+      'Over Uses': 'Optimism and flattery',
+      'Under Pressure': 'Careless, disorganized, and inconsistent',
+      'Fear': 'Feeling worthless or left out',
+      'More Effective With': 'Better time management, emotional self-regulation, and following through on what they say they\'ll do',
+      'Opposite Style': 'Observer'
+    },
+    personalThoughts: {
+      likes: [
+        "I'm a people person and I know how to make others feel seen and valued",
+        "I can tell what someone needs before they say it",
+        "My generosity and sensitivity are things I'm genuinely proud of"
+      ],
+      dislikes: [
+        "I hold myself to a standard of caring that I can never quite reach",
+        "My inability to say no has cost me more than I like to admit",
+        "Giving a lot and getting little back is a pattern I keep falling into",
+        "The version of me people see is often the edited, more agreeable version"
+      ],
+      neverDo: [
+        "Tune out when someone close to me is struggling",
+        "Make a to-do list two weeks in advance, and then complete it",
+        "Walk past an animal that needed help",
+        "Let a favor go unacknowledged"
+      ],
+      howToRelate: [
+        "Actually listen when I talk",
+        "Let me know I matter to you",
+        "If you have to criticize me, do it gently",
+        "Find joy in the small stuff with me",
+        "Be present. Really present. That means more to me than almost anything"
+      ],
+      peopleSay: [
+        "\"They love the people in their life with everything they have.\"",
+        "\"Funny, warm, and quietly sharp. They notice things.\"",
+        "\"They love hard, and their people feel it. Their friendship feels like sunshine.\""
+      ]
+    },
+    affirmations: [
+      "My needs matter just as much as everyone else's.",
+      "I'm allowed to ask for what I want.",
+      "Being loved doesn't require giving love first."
+    ]
+  },
+  F: {
+    color: 'var(--sooth-lime)',
+    colorName: 'Soothing Lime',
+    archetype: 'The Helper',
+    shortDesc: 'You make teams better just by being in them. Sensitive, steady, and the kind of person who actually follows through.',
+    fullDesc: `If Soothing Lime is your color, you are someone who makes teams better just by being in them. You're sensitive to what others need, steady under most kinds of pressure, and the kind of person who actually follows through on 'let me know if you need anything.' You prefer collaborative environments and do your best work when you feel secure, supported, and appreciated. You work through relationships, not around them, and you have a rare ability to hold space for people who are struggling without making them feel judged.\n\nWhat Helpers have to watch is the tendency to define themselves through service to others. It can be hard for you to make decisions without checking in with the group, to push back when you're being taken advantage of, or to set limits on how much you give. People sometimes mistake your steadiness for passivity — but you're not passive, you're just selective about when and where you expend your energy. Learning to advocate for your own needs — with the same generosity you show everyone else — is the work.`,
+    traits: {
+      'Inner Drive': 'Understanding others and empathy',
+      'Goal': 'Close relationships, low-pressure environments, being of service to others',
+      'Judges Others By': 'Loyalty and how genuine they are',
+      'Influences Others By': 'Offering help and a listening ear',
+      'Value to a Team': 'Dependable, sincere, loyal',
+      'Over Uses': 'Being too tolerant and making everything personal',
+      'Under Pressure': 'Passive, resentful, and prone to feeling like a victim',
+      'Fear': 'Conflict, high pressure',
+      'More Effective With': 'Honest feedback, knowing when to step back, and staying focused on getting the job done',
+      'Opposite Style': 'Reformer'
+    },
+    personalThoughts: {
+      likes: [
+        "I know how to slow down and actually enjoy people and relationships",
+        "I can hold multiple perspectives without feeling the need to pick a side",
+        "My default is acceptance, not judgment",
+        "The world feels manageable to me, and I help others feel that way too"
+      ],
+      dislikes: [
+        "I'm not always sure what I actually want",
+        "I care too much about what people think, and feedback that feels critical can really sting",
+        "I can go too long without a clear direction and not even notice until I'm already lost"
+      ],
+      neverDo: [
+        "Start a fight at a family gathering on purpose",
+        "Be rude or aggressive toward someone who didn't deserve it",
+        "Announce my grievances to a group of colleagues",
+        "Fail to sympathize with a friend"
+      ],
+      howToRelate: [
+        "Let me finish my thought, even if it takes a minute",
+        "Don't hit me with something big out of nowhere",
+        "Don't rush my decision-making process",
+        "My flexibility isn't an invitation to walk over me"
+      ],
+      peopleSay: [
+        "\"Being around them feels easy. They just let you be who you are.\"",
+        "\"They care about the things worth caring about.\"",
+        "\"They make you feel like your pace is fine, whatever it is.\""
+      ]
+    },
+    affirmations: [
+      "Living for myself isn't the same as not caring about others.",
+      "What I want deserves attention too.",
+      "I can build a life with intention — and I will."
+    ]
+  },
+  G: {
+    color: 'var(--earth-green)',
+    colorName: 'Earth Green',
+    archetype: 'The Supporter',
+    shortDesc: 'The steady one. You show up consistently, follow through reliably, and make everyone around you feel at ease.',
+    fullDesc: `Earth Green Supporters are the steady ones — the people who show up consistently, follow through reliably, and make everyone around them feel at ease. You are patient, considerate, and genuinely easy to get along with. You build your closest relationships slowly and intentionally, and the people lucky enough to be in your inner circle know you'll go the extra mile for them without being asked.\n\nWhere Supporters can struggle is with change and urgency. You prefer familiar environments, predictable routines, and the chance to move at your own pace. When things shift quickly or without warning, you can dig in and resist, even when change would genuinely benefit you — not out of stubbornness, but out of a genuine need to feel grounded before moving forward. Pushing yourself toward new experiences, even uncomfortable ones, is where your growth lives.`,
+    traits: {
+      'Inner Drive': 'Keeping the peace and making room for others',
+      'Goal': 'A stable environment with as little disruption as possible',
+      'Judges Others By': 'Loyalty and how well they connect with people',
+      'Influences Others By': 'Consistency and being easy to be around',
+      'Value to a Team': 'Reliable, steady, and deeply loyal',
+      'Over Uses': 'Playing it safe and quietly resisting change',
+      'Under Pressure': 'Goes through the motions of adapting without really buying in',
+      'Fear': 'Change, chaos, and feeling unnecessary',
+      'More Effective With': 'Willingness to speak up and share ideas; self-confidence built through positive reinforcement',
+      'Opposite Style': 'Director'
+    },
+    personalThoughts: {
+      likes: [
+        "I'm loyal, dependable, hardworking, and organized — and those things matter",
+        "I'm responsible and I take my commitments seriously",
+        "I'm smart, loyal, and I have a sense of humor that surprises people",
+        "I can get along with most people and feel in harmony with the world"
+      ],
+      dislikes: [
+        "Fear of getting it wrong can lead me to procrastinate more than I'd like",
+        "I worry about being overlooked or taken advantage of",
+        "My mind can spiral into worst-case scenarios faster than I'd like"
+      ],
+      neverDo: [
+        "Ignore a strange noise in the house and go back to sleep",
+        "Stop thinking about the shelf ornament I broke at a friend's house",
+        "Stop second-guessing an expensive purchase the minute I get home",
+        "Overwhelm someone with rude aggression"
+      ],
+      howToRelate: [
+        "Reassure me that I'm valued and considered",
+        "Don't frame my carefulness as a flaw",
+        "Let me finish what I have to say, even if it doesn't make sense to you",
+        "Don't rush me into anything new. Ease me in"
+      ],
+      peopleSay: [
+        "\"The most reliable, trustworthy, hardworking person I know.\"",
+        "\"I never feel that they are judging me; they are very patient and perceptive.\"",
+        "\"Nothing gets past them. They see it all, even if it seems like they don't.\""
+      ]
+    },
+    affirmations: [
+      "Taking risks is part of growing, and I can handle it.",
+      "Worry is not the same as preparation.",
+      "I know more than I give myself credit for."
+    ]
+  },
+  H: {
+    color: 'var(--prag-teal)',
+    colorName: 'Pragmatic Teal',
+    archetype: 'The Coordinator',
+    shortDesc: 'Loyal, disciplined, and thorough. You take your commitments seriously and don\'t make decisions lightly.',
+    fullDesc: `If Pragmatic Teal is your color, you are someone who takes your commitments seriously — to your work, your people, and your principles. You are loyal, disciplined, and thorough — someone with a strong personal value system who doesn't make decisions lightly. You are careful, systematic, and precise, and you hold yourself to high standards without needing everyone to know it. You work best in environments that value structure, give you time to think, and don't expect you to make snap decisions.\n\nWhere Coordinators can get stuck is in the worry zone. You're prone to overthinking decisions, second-guessing yourself after the fact, and catastrophizing outcomes that are unlikely to happen. Your caution is a genuine strength in the right context — but it can tip into anxiety when the environment is chaotic or the expectations are unclear. Learning to trust yourself, even without a guarantee, is the growth edge that changes everything. People who don't know you well may see you as reserved or overly cautious — but those who do recognize someone who is trustworthy, meticulous, and built for the long haul.`,
+    traits: {
+      'Inner Drive': 'Avoiding conflict and keeping things running smoothly',
+      'Goal': 'Correctness and orderliness',
+      'Judges Others By': 'How sharp and perceptive they are',
+      'Influences Others By': 'Facts, logical arguments, and a step-by-step approach',
+      'Value to a Team': 'Brings clarity, gathers the right information, and tests ideas before committing',
+      'Over Uses': 'Over-analyzing and needing everything to be perfectly organized',
+      'Under Pressure': 'Anxious, detail-obsessed, hard to reassure',
+      'Fear': 'Snap decisions and anything that feels irrational or reckless',
+      'More Effective With': 'Self-confidence, clear expectations, genuine appreciation, and a calm, structured environment',
+      'Opposite Style': 'Motivator'
+    },
+    personalThoughts: {
+      likes: [
+        "I'm responsible, hardworking, and I follow through",
+        "I'm very sharp and I notice things most people miss",
+        "I bring order to things that would otherwise be chaotic",
+        "I show up for the people and commitments in my life"
+      ],
+      dislikes: [
+        "Fear of getting it wrong makes me slower than I'd like to be",
+        "I can exhaust myself with 'what ifs' that never come true",
+        "I'm a bit of a perfectionist, and that slows me down more than it should",
+        "I wear myself out worrying about what might happen"
+      ],
+      neverDo: [
+        "Ignore a noise in the house at night",
+        "Forgive myself for breaking a friend's shelf ornament",
+        "Be sure that I had made the right decisions after buying an expensive item",
+        "Decide to make a career change without asking everyone else's opinion first"
+      ],
+      howToRelate: [
+        "Be clear, paced, and direct",
+        "Listen to everything I say",
+        "Don't criticize me for being fearful",
+        "Give me reassurance that you consider me",
+        "Be steady and systematic",
+        "Introduce me gradually to anything new"
+      ],
+      peopleSay: [
+        "\"They are the most reliable, trustworthy, and hardworking person I know.\"",
+        "\"They are intelligent, loyal and loveable and has never let me down.\"",
+        "\"They never miss a trick! They would make a good detective with that suspicious mind of theirs.\""
+      ]
+    },
+    affirmations: [
+      "I will learn to trust my own decisions.",
+      "I will take more risks and not be afraid of making mistakes.",
+      "Nothing terrible is going to happen."
+    ]
+  }
+};
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let currentRound = 0;
+// rankings[round] = array of letter chars in current ranked order (top→bottom)
+let rankings = Array(10).fill(null).map(() => null);
+let sortableInstance = null;
+let studentName = '';
+let lastPrimaryProfiles = [];
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+function startQuiz() {
+  const nameInput = document.getElementById('student-name');
+  studentName = nameInput.value.trim();
+  if (!studentName) {
+    alert('Please enter your name before beginning.');
+    nameInput.focus();
+    return;
+  }
+  currentRound = 0;
+  rankings = Array(10).fill(null).map(() => null);
+  showScreen('quiz-screen');
+  renderRound(currentRound);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ─────────────────────────────────────────────
+//  RENDER ROUND
+// ─────────────────────────────────────────────
+function renderRound(idx) {
+  const round = ROUNDS[idx];
+  const pct = Math.round(((idx + 1) / 10) * 100);
+
+  document.getElementById('progress-text').textContent = `Round ${idx + 1} of 10`;
+  document.getElementById('progress-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+  document.getElementById('round-tag').textContent = round.tag;
+  document.getElementById('round-title').textContent = round.title;
+  document.getElementById('round-subtitle').innerHTML = round.subtitle;
+
+  // Determine item order: use saved ranking or original order
+  const savedOrder = rankings[idx];
+  const orderedItems = savedOrder
+    ? savedOrder.map(letter => round.items.find(i => i.letter === letter))
+    : [...round.items];
+
+  const list = document.getElementById('sort-list');
+  list.innerHTML = '';
+
+  orderedItems.forEach((item, pos) => {
+    const li = document.createElement('li');
+    li.className = 'sort-item';
+    li.dataset.letter = item.letter;
+    const score = SCORE_MAP[pos];
+    li.innerHTML = `
+      <div class="rank-badge">${pos + 1}</div>
+      <span class="drag-handle">⠿</span>
+      <span class="item-text">${item.text}</span>
+      <span class="score-hint">${score} pts</span>
+    `;
+    list.appendChild(li);
+  });
+
+  // Reinitialize Sortable
+  if (sortableInstance) sortableInstance.destroy();
+  sortableInstance = Sortable.create(list, {
+    animation: 180,
+    ghostClass: 'sortable-ghost',
+    chosenClass: 'sortable-chosen',
+    onEnd: updateRankBadges
+  });
+
+  updateRankBadges();
+
+  // Update nav buttons
+  document.getElementById('prev-btn').style.visibility = idx === 0 ? 'hidden' : 'visible';
+  const isLast = idx === 9;
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.textContent = isLast ? 'See My Results →' : 'Next Round →';
+}
+
+function updateRankBadges() {
+  const items = document.querySelectorAll('.sort-item');
+  items.forEach((item, i) => {
+    item.querySelector('.rank-badge').textContent = i + 1;
+    item.querySelector('.score-hint').textContent = `${SCORE_MAP[i]} pts`;
+  });
+}
+
+// ─────────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────────
+function saveCurrentRanking() {
+  const items = document.querySelectorAll('#sort-list .sort-item');
+  rankings[currentRound] = Array.from(items).map(li => li.dataset.letter);
+}
+
+function nextRound() {
+  saveCurrentRanking();
+  if (currentRound < 9) {
+    currentRound++;
+    renderRound(currentRound);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showResults();
+  }
+}
+
+function prevRound() {
+  saveCurrentRanking();
+  if (currentRound > 0) {
+    currentRound--;
+    renderRound(currentRound);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// ─────────────────────────────────────────────
+//  SCORING
+// ─────────────────────────────────────────────
+function calculateScores() {
+  const totals = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0, H: 0 };
+  rankings.forEach(ranking => {
+    if (!ranking) return;
+    ranking.forEach((letter, pos) => {
+      totals[letter] += SCORE_MAP[pos];
+    });
+  });
+  return totals;
+}
+
+// ─────────────────────────────────────────────
+//  RESULTS
+// ─────────────────────────────────────────────
+function showResults() {
+  const scores = calculateScores();
+  const maxScore = 150; // 15 pts × 10 rounds
+
+  // Sort letters by score descending
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const topScore = sorted[0][1];
+  const primaryEntries = sorted.filter(([, score]) => score === topScore);
+  const primaryProfiles = primaryEntries.map(([letter]) => PERSONALITIES[letter]);
+  const isTie = primaryProfiles.length > 1;
+  lastPrimaryProfiles = primaryProfiles;
+
+  // ── Score grid
+  const grid = document.getElementById('score-grid');
+  grid.innerHTML = '';
+  sorted.forEach(([letter, score]) => {
+    const p = PERSONALITIES[letter];
+    const pct = Math.round((score / maxScore) * 100);
+    const isPrimary = score === topScore;
+    grid.innerHTML += `
+      <div class="color-card ${isPrimary ? 'primary' : ''}">
+        <div class="accent-bar" style="background:${p.color}"></div>
+        <div class="card-top">
+          <div>
+            <div class="color-name" style="color:${p.color}">${p.colorName}${isPrimary ? '<span class="primary-badge">Your Color</span>' : ''}</div>
+            <div class="archetype">${p.archetype}</div>
+          </div>
+          <div class="score-display">${score}</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-fill" style="background:${p.color};width:${pct}%"></div>
+        </div>
+      </div>
+    `;
+  });
+
+  // ── Primary profile(s) — show every personality tied for the top score
+  const profileEl = document.getElementById('primary-profile');
+  profileEl.innerHTML = primaryProfiles.map(primaryP => {
+    const traitsHTML = Object.entries(primaryP.traits).map(([k, v]) => `
+      <div class="trait-item">
+        <div class="trait-label">${k}</div>
+        <div class="trait-value">${v}</div>
+      </div>
+    `).join('');
+    const affirmHTML = primaryP.affirmations.map(a => `<li>${a}</li>`).join('');
+    const descParagraphs = primaryP.fullDesc.split('\n\n').map(p => `<p>${p}</p>`).join('');
+    const pt = primaryP.personalThoughts;
+    const ptHTML = `
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a ${primaryP.archetype.replace('The ', '')}</h4>
+          <ul>${pt.likes.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a ${primaryP.archetype.replace('The ', '')}</h4>
+          <ul>${pt.dislikes.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>${pt.neverDo.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>${pt.howToRelate.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>${pt.peopleSay.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>${affirmHTML}</ul>
+        </div>
+      </div>
+    `;
+
+    return `
+      <div class="profile-section">
+        <div class="profile-header" style="background:${primaryP.color}">
+          <div style="font-size:0.8rem;opacity:0.8;font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">${isTie ? "It's a Tie — One of Your Primary Colors" : 'Your Primary Color'}</div>
+          <h2>${primaryP.archetype} · ${primaryP.colorName}</h2>
+          <div class="sub">${primaryP.shortDesc}</div>
+        </div>
+        <div class="profile-body">
+          ${descParagraphs}
+          <div class="trait-grid">${traitsHTML}</div>
+          ${ptHTML}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // ── Secondary profiles (remaining ranks, collapsible)
+  const secEl = document.getElementById('secondary-profiles');
+  secEl.innerHTML = '';
+  sorted.slice(primaryProfiles.length).forEach(([letter, score]) => {
+    const p = PERSONALITIES[letter];
+    const descPara = p.fullDesc.split('\n\n')[0]; // just first paragraph
+    secEl.innerHTML += `
+      <details class="secondary-profile">
+        <summary>
+          <span class="color-swatch" style="background:${p.color}"></span>
+          ${p.archetype} · ${p.colorName}
+          <span class="summary-score">${score} pts</span>
+        </summary>
+        <div class="secondary-body">
+          <p style="margin-top:14px">${descPara}</p>
+        </div>
+      </details>
+    `;
+  });
+
+  showScreen('results-screen');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+
+function notifyInstructor() {
+  const btn = document.getElementById('notify-btn');
+  const status = document.getElementById('notify-status');
+  btn.disabled = true;
+  status.textContent = 'Sending...';
+
+  const personalityType = lastPrimaryProfiles.map(p => `${p.archetype} · ${p.colorName}`).join(' & ');
+
+  emailjs.send('service_17hkhte', 'template_i2p1669', {
+    student_name: studentName,
+    personality_type: personalityType
+  }).then(() => {
+    status.textContent = '✓ Sent! Your instructor has been notified.';
+  }, (err) => {
+    status.textContent = 'Something went wrong sending the notification. Please try again.';
+    btn.disabled = false;
+    console.error('EmailJS error:', err);
+  });
+}
+</script>
+</body>
+</html>

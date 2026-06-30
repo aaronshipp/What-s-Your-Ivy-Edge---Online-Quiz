@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ivy Edge — All Personality Profiles</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:         #000000;
+      --gold:         #C9A84C;
+      --light:        #FFF5DB;
+      --white:        #FFFDF9;
+      --mid:          #DDD8CE;
+      --text:         #2C2C2C;
+      --radius:       12px;
+      --cool-blue:    #0000FF;
+      --royal-purple: #4B0082;
+      --fiery-red:    #FF0F0F;
+      --rad-orange:   #FF5B00;
+      --sun-gold:     #EFBF04;
+      --sooth-lime:   #96c100;
+      --earth-green:  #185E3F;
+      --prag-teal:    #069494;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--light);
+      color: var(--text);
+    }
+
+    .print-header {
+      background: #000000;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .print-header .logo {
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .print-header .logo span { color: var(--white); font-weight: normal; }
+    .print-header .print-btn {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .print-header .print-btn:hover { background: #b8922e; }
+
+    .profile-page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+      page-break-after: always;
+      break-after: always;
+    }
+    .profile-page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    .profile-section {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .profile-header {
+      padding: 24px 28px 20px;
+      color: var(--white);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .profile-header h2 { font-size: 1.6rem; margin-bottom: 4px; }
+    .profile-header .sub { font-size: 0.9rem; opacity: 0.85; }
+    .profile-body { padding: 24px 28px; }
+    .profile-body p {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+
+    .short-desc {
+      font-size: 1rem;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--mid);
+    }
+
+    .trait-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .trait-item {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 12px 14px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .trait-label {
+      font-family: Arial, sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .trait-value {
+      font-size: 0.9rem;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .personal-thoughts { margin-top: 24px; }
+    .personal-thoughts h3 {
+      font-family: Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--mid);
+    }
+    .pt-section {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .pt-section h4 {
+      font-family: Arial, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .pt-section ul { list-style: none; padding: 0; }
+    .pt-section ul li {
+      font-size: 0.9rem;
+      color: var(--navy);
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 5px;
+    }
+    .pt-section ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    .affirmations {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-top: 12px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .affirmations h4 {
+      font-family: Arial, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .affirmations ul { list-style: none; padding: 0; }
+    .affirmations ul li {
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .affirmations ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    @media print {
+      body { background: white; }
+      .print-header .print-btn { display: none; }
+      .profile-page { max-width: 100%; padding: 0 0 40px; }
+      .profile-header, .trait-item, .affirmations, .pt-section {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @page { size: letter portrait; margin: 0.6in; }
+  </style>
+</head>
+<body>
+
+<div class="print-header">
+  <div class="logo">The Ivy Edge <span>| Personality Profiles</span></div>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<!-- ══ A · COOL BLUE · THE OBSERVER ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#0000FF;">
+      <h2>The Observer</h2>
+      <div class="sub">Cool Blue</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">Analytical, precise, and deeply thoughtful. You rely on facts and take pride in getting things exactly right.</p>
+      <p>If Cool Blue is your color, you're the person who actually reads the fine print — and probably highlights it, too. You think before you speak, lean on facts over feelings, and take genuine pride in getting things right. You rely on data over gut feelings, and accuracy matters to you — in your work, your words, and your decisions. Preparation is your superpower; you'd rather over-research than be caught off guard. You work best in calm, focused environments, and you tend to connect most easily with people who take things as seriously as you do.</p>
+      <p>The flip side? Owning a mistake can be tough. When you're wrong, your instinct is to go back and find more evidence rather than just move on. To the people who really know you, you are one of the most thoughtful and reliable people in the room. People who don't know you well, however, might read your quiet, measured style as cold or distant — but that's just you being thoughtful. Trust takes time for you, and that's completely okay.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Doing things right, avoiding conflict with others</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Correctness, predictability, the need to perceive and understand</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">How people think</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Logical arguments, factual data</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Tests, clarifies, and evaluates</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Analysis and research, what has worked before</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Worried, gets bogged down</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Ridicule; abrupt change</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Learning to decide without all the answers, greater understanding of people, enthusiasm</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Inspirer</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being an Observer</h4>
+          <ul>
+            <li>I have a strong sense of integrity and do what I think is right, even when others disagree</li>
+            <li>I'm not motivated by appearances or what others think I should want</li>
+            <li>I'm able to see situations clearly and without letting emotions cloud my judgment</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being an Observer</h4>
+          <ul>
+            <li>I sometimes come across as defensive or cynical, even when I don't mean to</li>
+            <li>I struggle to say exactly what I mean in the moment</li>
+            <li>Social situations I didn't opt into can feel exhausting and uncomfortable</li>
+            <li>It bothers me when people who don't work as carefully as I do still get ahead</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Throw a surprise party or take a job in sales</li>
+            <li>Volunteer to be the host at a big social event</li>
+            <li>Spend my free time keeping up with celebrity drama</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Give me time alone to process my thoughts and feelings</li>
+            <li>Don't mistake my quietness for rudeness — I just move at my own pace</li>
+            <li>Be direct — I respect straightforwardness more than almost anything</li>
+            <li>When I seem frustrated, I'm almost always frustrated with myself</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"They're a loner — but totally content spending hours deep in something that interests them."</li>
+            <li>"Honestly, they're one of the most knowledgeable people I know."</li>
+            <li>"They're quietly perceptive — they see things the rest of us walk right past."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>I'll approach others with openness instead of assumptions.</li>
+            <li>Letting people in actually helps me grow.</li>
+            <li>I don't have to win every intellectual exchange.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ B · ROYAL PURPLE · THE REFORMER ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#4B0082;">
+      <h2>The Reformer</h2>
+      <div class="sub">Royal Purple</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">Driven by excellence. You set the bar high, think fast, and can't understand why others wouldn't do the same.</p>
+      <p>Royal Purple Reformers are wired for excellence — and not the participation-trophy kind. You set the bar high for yourself and genuinely can't understand why others wouldn't do the same. Your mind moves fast, jumps between ideas, and almost always lands on a creative solution that no one else considered. You need space to think and the freedom to question — being micromanaged is basically your kryptonite.</p>
+      <p>The tension for Reformers is that the same drive that makes you exceptional can make you hard to be around. You can become blunt when frustrated, dismissive when your ideas are ignored, and slow to let go of a position even when the evidence says otherwise. Your standards, which are genuinely your greatest asset, can also make you hard on yourself and impatient with people who operate differently. Others might see you as intense or overbearing — but underneath that is someone who genuinely cares about doing things the right way.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Deep thought and attention to the task</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Striving for excellence</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">How sharp and hardworking they are</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Efficiency and perfection</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Explores all avenues before making decisions</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Self-criticism and the need to be in charge</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Overly critical, impatient, and negative</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Disorganization and failure</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Patience and understanding of how others like to work</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Helper</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Reformer</h4>
+          <ul>
+            <li>I'm self-disciplined and have a track record of actually getting things done</li>
+            <li>I'm always pushing myself to be the best version of who I can be</li>
+            <li>I'm reliable, responsible, and fully committed to what I take on</li>
+            <li>I don't compromise on ethics. I know what's right and I do it</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Reformer</h4>
+          <ul>
+            <li>I get genuinely frustrated when others don't match my effort level</li>
+            <li>I can get so intense about everything that I forget to breathe</li>
+            <li>I hold high expectations for myself and others, and the disappointment when they aren't met is real</li>
+            <li>I'm a perfectionist, and that's not always easy to live with or work alongside</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Stop caring about my own interests</li>
+            <li>Show up late</li>
+            <li>Pretend criticism doesn't sting</li>
+            <li>Forgive myself quickly for a mistake</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Remind me that it's okay to take things a little less seriously sometimes</li>
+            <li>Recognize my effort, not just the outcome</li>
+            <li>Step in and help carry the load without me having to ask</li>
+            <li>Help me get out of my own head when I'm being too critical</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"You can hand them an assignment and walk away. It'll be done, and done well."</li>
+            <li>"They won't do something they believe is wrong. Period."</li>
+            <li>"They set the standard. Everyone else is just trying to keep up."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>It's okay to laugh at myself sometimes.</li>
+            <li>Taking myself less seriously doesn't make me less serious about what matters.</li>
+            <li>I can make mistakes and still be someone worth looking up to.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ C · FIERY RED · THE DIRECTOR ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#FF0F0F;">
+      <h2>The Director</h2>
+      <div class="sub">Fiery Red</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">Built for action. Decisive, driven, and completely comfortable leading from the front.</p>
+      <p>Fiery Red Directors are built for action. You are decisive, driven, and completely comfortable leading from the front. Routine bores you. Rules that don't make sense frustrate you. You want authority, challenge, and the freedom to make things happen your way. When a problem needs solving, you cut straight to the point and push hard until it's done.</p>
+      <p>The thing about Directors is that your intensity, which is one of your greatest strengths, can feel like "a lot" to people who operate differently. You can come across as impatient, demanding, or even intimidating — especially when your standards aren't being met; others may feel bulldozed. Learning to slow down, listen, and make room for others' approaches isn't natural for you, but it's where your real growth lives. Your energy is genuinely powerful — the work is learning to channel it in ways that bring people with you rather than push them away.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Take charge of the world around them and compete to win</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Being in control, independence, and pushing for change</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">Their ability to get the task done</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Force of character, persistence, and drive</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Bold attitude, imagination, and the drive to make things happen</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Impatience, going it alone, and pushing too hard</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Aggressive, stubborn, and quick to push back</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Losing control. Being seen as soft or not serious</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Patience, genuine concern for others, and humility about the fact that they don't always have the right answer</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Supporter</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Director</h4>
+          <ul>
+            <li>When something needs to happen, I make it happen</li>
+            <li>The people close to me know I'll always have their back</li>
+            <li>I know who I am and I don't need anyone's approval to feel that way</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Director</h4>
+          <ul>
+            <li>My directness sometimes lands harder than I intend, and people pull away</li>
+            <li>Sitting with someone else's opinion long enough to really hear it is hard for me</li>
+            <li>Incompetence and slow movement make me impatient in ways I know aren't always fair</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Genuinely mean it when I say 'let's do it your way'</li>
+            <li>Keep my opinion to myself when I know something is wrong</li>
+            <li>Play to tie</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Hold your ground with me — I respect confidence, not compliance</li>
+            <li>Know that I have a softer side, even if I don't lead with it</li>
+            <li>Loyalty matters more to me than almost anything</li>
+            <li>My bluntness is never personal — it's just efficiency</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"I can say exactly what I'm thinking around them. They actually want that."</li>
+            <li>"They lead clearly and fairly. You always know where you stand."</li>
+            <li>"They'll say the uncomfortable thing that everyone else is thinking but won't say."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>Good relationships are worth bending for.</li>
+            <li>The first idea isn't always the best one — including mine.</li>
+            <li>Letting people see my softer side doesn't make me less strong.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ D · RADIANT ORANGE · THE MOTIVATOR ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#FF5B00;">
+      <h2>The Motivator</h2>
+      <div class="sub">Radiant Orange</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">The energy in the room. You inspire, rally, and make even reluctant crowds start to believe.</p>
+      <p>Radiant Orange Motivators are the energy in the room. You're at your best when you're around people — inspiring them, rallying them, getting them excited about what's possible. You're a natural communicator who can read a group, adapt on the fly, and make even a reluctant crowd start to believe. You don't just want to succeed; you want to succeed visibly, with a team behind you who feels good about what you've built together. Results matter to you, but so do the people you're working with — and that combination is rare.</p>
+      <p>What Motivators have to watch is the tendency to be too optimistic — about what you can deliver, about how others will perform, about how long things will take. Your confidence is genuinely infectious, but it can occasionally outrun reality. You can also get bored quickly when the novelty wears off. The antidote is structure: a little more planning, a little more patience, and a little more attention to the details you'd rather skip. Slowing down to build structure isn't your favorite thing — but it's what turns your energy into lasting results.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">To express an enthusiastic and charismatic presence</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Recognition and keeping an eye on the big picture</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">Their own idea of what success looks like</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Enthusiasm for what's possible; recognition and praise</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Influences and inspires others to achieve their goals</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Assertiveness and big-picture thinking at the expense of details</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Bored easily, impatient, and aggressive</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Not being given real responsibility, and failure</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Structure and follow-through, understanding how processes work, and slowing down enough to put things in writing</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Coordinator</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Motivator</h4>
+          <ul>
+            <li>I'm genuinely optimistic — problems don't knock me out for long</li>
+            <li>I go after the things that scare me a little. That's how I know they're worth it</li>
+            <li>I have a wide range of passions and I'm not afraid to pursue all of them</li>
+            <li>I lead with generosity</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Motivator</h4>
+          <ul>
+            <li>Inefficiency drives me crazy. I have very little patience for it</li>
+            <li>I sometimes perform a version of myself to make a good impression</li>
+            <li>There's never enough time to do everything I want to do</li>
+            <li>One-on-one intensity can feel confining to me after a while</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Let a meeting run inefficiently when I could step in</li>
+            <li>Spend a week in complete silence</li>
+            <li>Finish every project before starting the next one</li>
+            <li>Plan my week in a spreadsheet and actually follow it</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Give me room to breathe — freedom and friendship go a long way with me</li>
+            <li>Keep me engaged with interesting conversation</li>
+            <li>Let me be a little extra sometimes — it's how I connect</li>
+            <li>Challenge me intellectually and make me laugh</li>
+            <li>Don't try to change me. Get to know me</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"They make everyone feel like they matter."</li>
+            <li>"When they're not doing something adventurous, they're helping someone else with something."</li>
+            <li>"They're the person you call when you need to remember why life is good."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>I'll build in actual time to slow down.</li>
+            <li>I'll bring more balance into my life — not less enthusiasm, just more grounding.</li>
+            <li>Depth matters as much as breadth.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ E · SUNSHINE GOLD · THE INSPIRER ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#EFBF04;">
+      <h2>The Inspirer</h2>
+      <div class="sub">Sunshine Gold</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">Outgoing, enthusiastic, and genuinely magnetic. You make rooms feel different when you walk in.</p>
+      <p>Sunshine Gold Inspirers are the people who make rooms feel different when they walk in. You are outgoing, enthusiastic, and genuinely magnetic — people are drawn to your energy without always being able to explain why. You build friendships fast, light up social spaces, and have a gift for making others feel seen and excited. You have a wide circle of acquaintances, and your ability to network and connect is something others genuinely admire and often can't quite replicate. You don't just promote your ideas; you make people want to believe in them too.</p>
+      <p>The challenge for Inspirers is that your energy can scatter. You leap into things with excitement and sometimes skip the step where you gather all the information first. You may start more things than you finish, take on more than you can realistically manage, and struggle to stay consistent when the initial excitement fades. Time and follow-through are the skills that will turn your natural magnetism into something lasting.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Wanting to connect with and be accepted by others</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Popularity and approval</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">How well they communicate and how much they care about people</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Praise and favors</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Lightens the mood; lifts others up and isn't afraid to advocate for themselves too</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Optimism and flattery</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Careless, disorganized, and inconsistent</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Feeling worthless or left out</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Better time management, emotional self-regulation, and following through on what they say they'll do</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Observer</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being an Inspirer</h4>
+          <ul>
+            <li>I'm a people person and I know how to make others feel seen and valued</li>
+            <li>I can tell what someone needs before they say it</li>
+            <li>My generosity and sensitivity are things I'm genuinely proud of</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being an Inspirer</h4>
+          <ul>
+            <li>I hold myself to a standard of caring that I can never quite reach</li>
+            <li>My inability to say no has cost me more than I like to admit</li>
+            <li>Giving a lot and getting little back is a pattern I keep falling into</li>
+            <li>The version of me people see is often the edited, more agreeable version</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Tune out when someone close to me is struggling</li>
+            <li>Make a to-do list two weeks in advance, and then complete it</li>
+            <li>Walk past an animal that needed help</li>
+            <li>Let a favor go unacknowledged</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Actually listen when I talk</li>
+            <li>Let me know I matter to you</li>
+            <li>If you have to criticize me, do it gently</li>
+            <li>Find joy in the small stuff with me</li>
+            <li>Be present. Really present. That means more to me than almost anything</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"They love the people in their life with everything they have."</li>
+            <li>"Funny, warm, and quietly sharp. They notice things."</li>
+            <li>"They love hard, and their people feel it. Their friendship feels like sunshine."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>My needs matter just as much as everyone else's.</li>
+            <li>I'm allowed to ask for what I want.</li>
+            <li>Being loved doesn't require giving love first.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ F · SOOTHING LIME · THE HELPER ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#96c100;">
+      <h2>The Helper</h2>
+      <div class="sub">Soothing Lime</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">You make teams better just by being in them. Sensitive, steady, and the kind of person who actually follows through.</p>
+      <p>If Soothing Lime is your color, you are someone who makes teams better just by being in them. You're sensitive to what others need, steady under most kinds of pressure, and the kind of person who actually follows through on 'let me know if you need anything.' You prefer collaborative environments and do your best work when you feel secure, supported, and appreciated. You work through relationships, not around them, and you have a rare ability to hold space for people who are struggling without making them feel judged.</p>
+      <p>What Helpers have to watch is the tendency to define themselves through service to others. It can be hard for you to make decisions without checking in with the group, to push back when you're being taken advantage of, or to set limits on how much you give. People sometimes mistake your steadiness for passivity — but you're not passive, you're just selective about when and where you expend your energy. Learning to advocate for your own needs — with the same generosity you show everyone else — is the work.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Understanding others and empathy</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Close relationships, low-pressure environments, being of service to others</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">Loyalty and how genuine they are</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Offering help and a listening ear</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Dependable, sincere, loyal</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Being too tolerant and making everything personal</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Passive, resentful, and prone to feeling like a victim</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Conflict, high pressure</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Honest feedback, knowing when to step back, and staying focused on getting the job done</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Reformer</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Helper</h4>
+          <ul>
+            <li>I know how to slow down and actually enjoy people and relationships</li>
+            <li>I can hold multiple perspectives without feeling the need to pick a side</li>
+            <li>My default is acceptance, not judgment</li>
+            <li>The world feels manageable to me, and I help others feel that way too</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Helper</h4>
+          <ul>
+            <li>I'm not always sure what I actually want</li>
+            <li>I care too much about what people think, and feedback that feels critical can really sting</li>
+            <li>I can go too long without a clear direction and not even notice until I'm already lost</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Start a fight at a family gathering on purpose</li>
+            <li>Be rude or aggressive toward someone who didn't deserve it</li>
+            <li>Announce my grievances to a group of colleagues</li>
+            <li>Fail to sympathize with a friend</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Let me finish my thought, even if it takes a minute</li>
+            <li>Don't hit me with something big out of nowhere</li>
+            <li>Don't rush my decision-making process</li>
+            <li>My flexibility isn't an invitation to walk over me</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"Being around them feels easy. They just let you be who you are."</li>
+            <li>"They care about the things worth caring about."</li>
+            <li>"They make you feel like your pace is fine, whatever it is."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>Living for myself isn't the same as not caring about others.</li>
+            <li>What I want deserves attention too.</li>
+            <li>I can build a life with intention — and I will.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ G · EARTH GREEN · THE SUPPORTER ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#185E3F;">
+      <h2>The Supporter</h2>
+      <div class="sub">Earth Green</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">The steady one. You show up consistently, follow through reliably, and make everyone around you feel at ease.</p>
+      <p>Earth Green Supporters are the steady ones — the people who show up consistently, follow through reliably, and make everyone around them feel at ease. You are patient, considerate, and genuinely easy to get along with. You build your closest relationships slowly and intentionally, and the people lucky enough to be in your inner circle know you'll go the extra mile for them without being asked.</p>
+      <p>Where Supporters can struggle is with change and urgency. You prefer familiar environments, predictable routines, and the chance to move at your own pace. When things shift quickly or without warning, you can dig in and resist, even when change would genuinely benefit you — not out of stubbornness, but out of a genuine need to feel grounded before moving forward. Pushing yourself toward new experiences, even uncomfortable ones, is where your growth lives.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Keeping the peace and making room for others</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">A stable environment with as little disruption as possible</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">Loyalty and how well they connect with people</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Consistency and being easy to be around</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Reliable, steady, and deeply loyal</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Playing it safe and quietly resisting change</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Goes through the motions of adapting without really buying in</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Change, chaos, and feeling unnecessary</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Willingness to speak up and share ideas; self-confidence built through positive reinforcement</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Director</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Supporter</h4>
+          <ul>
+            <li>I'm loyal, dependable, hardworking, and organized — and those things matter</li>
+            <li>I'm responsible and I take my commitments seriously</li>
+            <li>I'm smart, loyal, and I have a sense of humor that surprises people</li>
+            <li>I can get along with most people and feel in harmony with the world</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Supporter</h4>
+          <ul>
+            <li>Fear of getting it wrong can lead me to procrastinate more than I'd like</li>
+            <li>I worry about being overlooked or taken advantage of</li>
+            <li>My mind can spiral into worst-case scenarios faster than I'd like</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Ignore a strange noise in the house and go back to sleep</li>
+            <li>Stop thinking about the shelf ornament I broke at a friend's house</li>
+            <li>Stop second-guessing an expensive purchase the minute I get home</li>
+            <li>Overwhelm someone with rude aggression</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Reassure me that I'm valued and considered</li>
+            <li>Don't frame my carefulness as a flaw</li>
+            <li>Let me finish what I have to say, even if it doesn't make sense to you</li>
+            <li>Don't rush me into anything new. Ease me in</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"The most reliable, trustworthy, hardworking person I know."</li>
+            <li>"I never feel that they are judging me; they are very patient and perceptive."</li>
+            <li>"Nothing gets past them. They see it all, even if it seems like they don't."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>Taking risks is part of growing, and I can handle it.</li>
+            <li>Worry is not the same as preparation.</li>
+            <li>I know more than I give myself credit for.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ H · PRAGMATIC TEAL · THE COORDINATOR ══ -->
+<div class="profile-page">
+  <div class="profile-section">
+    <div class="profile-header" style="background:#069494;">
+      <h2>The Coordinator</h2>
+      <div class="sub">Pragmatic Teal</div>
+    </div>
+    <div class="profile-body">
+      <p class="short-desc">Loyal, disciplined, and thorough. You take your commitments seriously and don't make decisions lightly.</p>
+      <p>If Pragmatic Teal is your color, you are someone who takes your commitments seriously — to your work, your people, and your principles. You are loyal, disciplined, and thorough — someone with a strong personal value system who doesn't make decisions lightly. You are careful, systematic, and precise, and you hold yourself to high standards without needing everyone to know it. You work best in environments that value structure, give you time to think, and don't expect you to make snap decisions.</p>
+      <p>Where Coordinators can get stuck is in the worry zone. You're prone to overthinking decisions, second-guessing yourself after the fact, and catastrophizing outcomes that are unlikely to happen. Your caution is a genuine strength in the right context — but it can tip into anxiety when the environment is chaotic or the expectations are unclear. Learning to trust yourself, even without a guarantee, is the growth edge that changes everything. People who don't know you well may see you as reserved or overly cautious — but those who do recognize someone who is trustworthy, meticulous, and built for the long haul.</p>
+      <div class="trait-grid">
+        <div class="trait-item"><div class="trait-label">Inner Drive</div><div class="trait-value">Avoiding conflict and keeping things running smoothly</div></div>
+        <div class="trait-item"><div class="trait-label">Goal</div><div class="trait-value">Correctness and orderliness</div></div>
+        <div class="trait-item"><div class="trait-label">Judges Others By</div><div class="trait-value">How sharp and perceptive they are</div></div>
+        <div class="trait-item"><div class="trait-label">Influences Others By</div><div class="trait-value">Facts, logical arguments, and a step-by-step approach</div></div>
+        <div class="trait-item"><div class="trait-label">Value to a Team</div><div class="trait-value">Brings clarity, gathers the right information, and tests ideas before committing</div></div>
+        <div class="trait-item"><div class="trait-label">Over Uses</div><div class="trait-value">Over-analyzing and needing everything to be perfectly organized</div></div>
+        <div class="trait-item"><div class="trait-label">Under Pressure</div><div class="trait-value">Anxious, detail-obsessed, hard to reassure</div></div>
+        <div class="trait-item"><div class="trait-label">Fear</div><div class="trait-value">Snap decisions and anything that feels irrational or reckless</div></div>
+        <div class="trait-item"><div class="trait-label">More Effective With</div><div class="trait-value">Self-confidence, clear expectations, genuine appreciation, and a calm, structured environment</div></div>
+        <div class="trait-item"><div class="trait-label">Opposite Style</div><div class="trait-value">Motivator</div></div>
+      </div>
+      <div class="personal-thoughts">
+        <h3>Personal Thoughts</h3>
+        <div class="pt-section">
+          <h4>What I like about being a Coordinator</h4>
+          <ul>
+            <li>I'm responsible, hardworking, and I follow through</li>
+            <li>I'm very sharp and I notice things most people miss</li>
+            <li>I bring order to things that would otherwise be chaotic</li>
+            <li>I show up for the people and commitments in my life</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>What I don't like about being a Coordinator</h4>
+          <ul>
+            <li>Fear of getting it wrong makes me slower than I'd like to be</li>
+            <li>I can exhaust myself with 'what ifs' that never come true</li>
+            <li>I'm a bit of a perfectionist, and that slows me down more than it should</li>
+            <li>I wear myself out worrying about what might happen</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things I would never do</h4>
+          <ul>
+            <li>Ignore a noise in the house at night</li>
+            <li>Forgive myself for breaking a friend's shelf ornament</li>
+            <li>Be sure that I had made the right decisions after buying an expensive item</li>
+            <li>Decide to make a career change without asking everyone else's opinion first</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>How to relate with me</h4>
+          <ul>
+            <li>Be clear, paced, and direct</li>
+            <li>Listen to everything I say</li>
+            <li>Don't criticize me for being fearful</li>
+            <li>Give me reassurance that you consider me</li>
+            <li>Be steady and systematic</li>
+            <li>Introduce me gradually to anything new</li>
+          </ul>
+        </div>
+        <div class="pt-section">
+          <h4>Things people say about me</h4>
+          <ul>
+            <li>"They are the most reliable, trustworthy, and hardworking person I know."</li>
+            <li>"They are intelligent, loyal and loveable and has never let me down."</li>
+            <li>"They never miss a trick! They would make a good detective with that suspicious mind of theirs."</li>
+          </ul>
+        </div>
+        <div class="affirmations">
+          <h4>Things to affirm to yourself</h4>
+          <ul>
+            <li>I will learn to trust my own decisions.</li>
+            <li>I will take more risks and not be afraid of making mistakes.</li>
+            <li>Nothing terrible is going to happen.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
