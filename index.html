@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>What's Your Ivy Edge? | Student Assessment</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>emailjs.init('vfTPp_kUt7gUwLOjY');</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -117,19 +115,6 @@
     .instr-card h2 { font-size: 1rem; color: var(--navy); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
     .instr-card ol { padding-left: 20px; }
     .instr-card ol li { margin-bottom: 8px; }
-    .name-input-wrap { text-align: center; margin-bottom: 20px; }
-    .name-input-wrap label { display: block; font-size: 0.9rem; color: #555; margin-bottom: 6px; }
-    .name-input-wrap input {
-      padding: 10px 16px;
-      border: 1.5px solid var(--mid);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      width: 280px;
-      max-width: 90%;
-    }
-    .notify-status { margin-top: 10px; font-size: 0.85rem; color: #666; }
-
     /* ── BUTTONS ── */
     .btn {
       display: inline-block;
@@ -463,50 +448,6 @@
       color: var(--gold);
     }
 
-    /* Personal Thoughts */
-    .personal-thoughts {
-      margin-top: 24px;
-    }
-    .personal-thoughts h3 {
-      font-family: Arial, sans-serif;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--navy);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--mid);
-    }
-    .pt-section {
-      background: var(--light);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-    }
-    .pt-section h4 {
-      font-family: Arial, sans-serif;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #888;
-      margin-bottom: 8px;
-    }
-    .pt-section ul { list-style: none; padding: 0; }
-    .pt-section ul li {
-      font-size: 0.9rem;
-      color: var(--navy);
-      line-height: 1.55;
-      padding-left: 18px;
-      position: relative;
-      margin-bottom: 5px;
-    }
-    .pt-section ul li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--gold);
-    }
-
     /* Disclaimer */
     .disclaimer {
       text-align: center;
@@ -617,16 +558,11 @@
   <div class="instr-card">
     <h2>How It Works</h2>
     <ol>
-      <li>You'll complete <strong>10 rounds</strong>, each with 8 words or statements.</li>
+      <li>You'll complete <strong>5 rounds</strong>, each with 8 words or statements.</li>
       <li>In each round, <strong>drag and drop</strong> the items to rank them — most like you at the top, least like you at the bottom.</li>
       <li>There are no right or wrong answers. Go with your gut — your first instinct is usually your truest one.</li>
       <li>At the end, you'll receive a detailed profile of your personal communication style and what makes you unique.</li>
     </ol>
-  </div>
-
-  <div class="name-input-wrap">
-    <label for="student-name">Enter your name to begin</label>
-    <input type="text" id="student-name" placeholder="Your full name">
   </div>
 
   <div style="text-align:center;">
@@ -638,11 +574,11 @@
 <div id="quiz-screen" class="screen">
   <div class="progress-wrap">
     <div class="progress-label">
-      <span id="progress-text">Round 1 of 10</span>
-      <span id="progress-pct">10%</span>
+      <span id="progress-text">Round 1 of 5</span>
+      <span id="progress-pct">20%</span>
     </div>
     <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width:10%"></div>
+      <div class="progress-fill" id="progress-fill" style="width:20%"></div>
     </div>
   </div>
 
@@ -670,7 +606,7 @@
 <div id="results-screen" class="screen">
   <div class="results-header">
     <h1>Your Ivy <em>Edge Profile</em></h1>
-    <p>Based on your rankings across all 10 rounds, here's how your communication style breaks down.</p>
+    <p>Based on your rankings across all 5 rounds, here's how your communication style breaks down.</p>
   </div>
 
   <div class="color-result-grid" id="score-grid"></div>
@@ -691,8 +627,7 @@
     &nbsp;
     <button class="btn btn-primary btn-sm" onclick="window.print()">Print Results</button>
     &nbsp;
-    <button class="btn btn-gold btn-sm" id="notify-btn" onclick="notifyInstructor()">Notify Instructor</button>
-    <p class="notify-status" id="notify-status"></p>
+    <a class="btn btn-gold btn-sm" href="https://www.ivy-edge.com/book-a-discovery-session.html" target="_blank" rel="noopener noreferrer">Book a Discovery Session</a>
   </div>
 </div>
 
@@ -717,97 +652,7 @@ const ROUNDS = [
     ]
   },
   {
-    tag: "Round 2 · Roles",
-    title: "Which role fits you best?",
-    subtitle: "Drag items so the role that <strong>most</strong> resonates with who you are is at the top.",
-    items: [
-      { letter: 'A', text: 'Organizer' },
-      { letter: 'B', text: 'Explorer' },
-      { letter: 'C', text: 'Taskmaster' },
-      { letter: 'D', text: 'Entertainer' },
-      { letter: 'E', text: 'Life of the Party' },
-      { letter: 'F', text: 'Listener' },
-      { letter: 'G', text: 'Designated Driver' },
-      { letter: 'H', text: 'Problem-Solver' },
-    ]
-  },
-  {
-    tag: "Round 3 · Traits",
-    title: "Rank these traits from most to least like you",
-    subtitle: "Drag items so the trait that <strong>best</strong> describes you is at the top.",
-    items: [
-      { letter: 'A', text: 'Tenacious' },
-      { letter: 'B', text: 'Blunt' },
-      { letter: 'C', text: 'Influential' },
-      { letter: 'D', text: 'Enthusiastic' },
-      { letter: 'E', text: 'Inspirational' },
-      { letter: 'F', text: 'Understanding' },
-      { letter: 'G', text: 'Refined' },
-      { letter: 'H', text: 'Disciplined' },
-    ]
-  },
-  {
-    tag: "Round 4 · Archetypes",
-    title: "Which role would you most naturally play on a team?",
-    subtitle: "Drag items so the role that feels <strong>most natural</strong> for you is at the top.",
-    items: [
-      { letter: 'A', text: 'Coach' },
-      { letter: 'B', text: 'Captain' },
-      { letter: 'C', text: 'Commander' },
-      { letter: 'D', text: 'CEO' },
-      { letter: 'E', text: 'Cheerleader' },
-      { letter: 'F', text: 'Counselor' },
-      { letter: 'G', text: 'Confidant' },
-      { letter: 'H', text: 'Case Worker' },
-    ]
-  },
-  {
-    tag: "Round 5 · Words",
-    title: "Rank these words from most to least like you",
-    subtitle: "Drag items so the word that <strong>best</strong> describes you is at the top.",
-    items: [
-      { letter: 'A', text: 'Gingerly' },
-      { letter: 'B', text: 'Efficient' },
-      { letter: 'C', text: 'Purposeful' },
-      { letter: 'D', text: 'Dynamic' },
-      { letter: 'E', text: 'Easygoing' },
-      { letter: 'F', text: 'Positive' },
-      { letter: 'G', text: 'Hospitable' },
-      { letter: 'H', text: 'Orderly' },
-    ]
-  },
-  {
-    tag: "Round 6 · Statements",
-    title: "Rank these statements from most to least true for you",
-    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
-    items: [
-      { letter: 'A', text: 'I like to be precise and straightforward.' },
-      { letter: 'B', text: 'I like to push myself to complete projects on time.' },
-      { letter: 'C', text: 'I like to put things into action.' },
-      { letter: 'D', text: 'I like to energize others into action.' },
-      { letter: 'E', text: 'I like to try out new ideas.' },
-      { letter: 'F', text: 'I like to advocate for the well-being of others.' },
-      { letter: 'G', text: 'I like to help other people.' },
-      { letter: 'H', text: 'I like to use trusted systems and methods to get work done.' },
-    ]
-  },
-  {
-    tag: "Round 7 · Statements",
-    title: "Rank these statements from most to least true for you",
-    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
-    items: [
-      { letter: 'A', text: 'I like to study every fact to see if it\'s true.' },
-      { letter: 'B', text: 'I like to be ethical in my decision-making process.' },
-      { letter: 'C', text: 'I like to do things rather than think about them.' },
-      { letter: 'D', text: 'I like to receive public praise for my good work efforts.' },
-      { letter: 'E', text: 'I like to act on my instincts and hunches.' },
-      { letter: 'F', text: 'I like to work at a measured pace.' },
-      { letter: 'G', text: 'I like to work in groups.' },
-      { letter: 'H', text: 'I like to work in calm and peaceful environments.' },
-    ]
-  },
-  {
-    tag: "Round 8 · Statements",
+    tag: "Round 2 · Statements",
     title: "Rank these statements from most to least true for you",
     subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
     items: [
@@ -822,22 +667,22 @@ const ROUNDS = [
     ]
   },
   {
-    tag: "Round 9 · Statements",
-    title: "Rank these statements from most to least true for you",
-    subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
+    tag: "Round 3 · Roles",
+    title: "Which role fits you best?",
+    subtitle: "Drag items so the role that <strong>most</strong> resonates with who you are is at the top.",
     items: [
-      { letter: 'A', text: 'I like to think carefully about problems before doing something.' },
-      { letter: 'B', text: 'I like to set high standards for myself and achieve them.' },
-      { letter: 'C', text: 'I like places that have profound respect for history and tradition.' },
-      { letter: 'D', text: 'I like to persuade people to my point of view.' },
-      { letter: 'E', text: 'I like to think on my feet without much preparation.' },
-      { letter: 'F', text: 'I like to encourage people to become their best selves.' },
-      { letter: 'G', text: 'I like to go out of my way to care about others.' },
-      { letter: 'H', text: 'I like to be loyal to my teammates in order to achieve our goals.' },
+      { letter: 'A', text: 'Organizer' },
+      { letter: 'B', text: 'Explorer' },
+      { letter: 'C', text: 'Taskmaster' },
+      { letter: 'D', text: 'Entertainer' },
+      { letter: 'E', text: 'Life of the Party' },
+      { letter: 'F', text: 'Listener' },
+      { letter: 'G', text: 'Designated Driver' },
+      { letter: 'H', text: 'Problem-Solver' },
     ]
   },
   {
-    tag: "Round 10 · Final Statements",
+    tag: "Round 4 · Final Statements",
     title: "Last round — rank these statements from most to least true for you",
     subtitle: "Drag items so the statement that <strong>best</strong> describes you is at the top.",
     items: [
@@ -849,6 +694,21 @@ const ROUNDS = [
       { letter: 'F', text: 'I like to support social justice causes.' },
       { letter: 'G', text: 'I like to listen carefully to what everyone has to say.' },
       { letter: 'H', text: 'I like to weigh and measure all perspectives before deciding.' },
+    ]
+  },
+  {
+    tag: "Round 5 · Archetypes",
+    title: "Which role would you most naturally play on a team?",
+    subtitle: "Drag items so the role that feels <strong>most natural</strong> for you is at the top.",
+    items: [
+      { letter: 'A', text: 'Coach' },
+      { letter: 'B', text: 'Captain' },
+      { letter: 'C', text: 'Commander' },
+      { letter: 'D', text: 'CEO' },
+      { letter: 'E', text: 'Cheerleader' },
+      { letter: 'F', text: 'Counselor' },
+      { letter: 'G', text: 'Confidant' },
+      { letter: 'H', text: 'Case Worker' },
     ]
   }
 ];
@@ -875,35 +735,6 @@ const PERSONALITIES = {
       'More Effective With': 'Learning to decide without all the answers, greater understanding of people, enthusiasm',
       'Opposite Style': 'Inspirer'
     },
-    personalThoughts: {
-      likes: [
-        "I have a strong sense of integrity and do what I think is right, even when others disagree",
-        "I'm not motivated by appearances or what others think I should want",
-        "I'm able to see situations clearly and without letting emotions cloud my judgment"
-      ],
-      dislikes: [
-        "I sometimes come across as defensive or cynical, even when I don't mean to",
-        "I struggle to say exactly what I mean in the moment",
-        "Social situations I didn't opt into can feel exhausting and uncomfortable",
-        "It bothers me when people who don't work as carefully as I do still get ahead"
-      ],
-      neverDo: [
-        "Throw a surprise party or take a job in sales",
-        "Volunteer to be the host at a big social event",
-        "Spend my free time keeping up with celebrity drama"
-      ],
-      howToRelate: [
-        "Give me time alone to process my thoughts and feelings",
-        "Don't mistake my quietness for rudeness — I just move at my own pace",
-        "Be direct — I respect straightforwardness more than almost anything",
-        "When I seem frustrated, I'm almost always frustrated with myself"
-      ],
-      peopleSay: [
-        "\"They're a loner — but totally content spending hours deep in something that interests them.\"",
-        "\"Honestly, they're one of the most knowledgeable people I know.\"",
-        "\"They're quietly perceptive — they see things the rest of us walk right past.\""
-      ]
-    },
     affirmations: [
       "I'll approach others with openness instead of assumptions.",
       "Letting people in actually helps me grow.",
@@ -927,37 +758,6 @@ const PERSONALITIES = {
       'Fear': 'Disorganization and failure',
       'More Effective With': 'Patience and understanding of how others like to work',
       'Opposite Style': 'Helper'
-    },
-    personalThoughts: {
-      likes: [
-        "I'm self-disciplined and have a track record of actually getting things done",
-        "I'm always pushing myself to be the best version of who I can be",
-        "I'm reliable, responsible, and fully committed to what I take on",
-        "I don't compromise on ethics. I know what's right and I do it"
-      ],
-      dislikes: [
-        "I get genuinely frustrated when others don't match my effort level",
-        "I can get so intense about everything that I forget to breathe",
-        "I hold high expectations for myself and others, and the disappointment when they aren't met is real",
-        "I'm a perfectionist, and that's not always easy to live with or work alongside"
-      ],
-      neverDo: [
-        "Stop caring about my own interests",
-        "Show up late",
-        "Pretend criticism doesn't sting",
-        "Forgive myself quickly for a mistake"
-      ],
-      howToRelate: [
-        "Remind me that it's okay to take things a little less seriously sometimes",
-        "Recognize my effort, not just the outcome",
-        "Step in and help carry the load without me having to ask",
-        "Help me get out of my own head when I'm being too critical"
-      ],
-      peopleSay: [
-        "\"You can hand them an assignment and walk away. It'll be done, and done well.\"",
-        "\"They won't do something they believe is wrong. Period.\"",
-        "\"They set the standard. Everyone else is just trying to keep up.\""
-      ]
     },
     affirmations: [
       "It's okay to laugh at myself sometimes.",
@@ -983,34 +783,6 @@ const PERSONALITIES = {
       'More Effective With': 'Patience, genuine concern for others, and humility about the fact that they don\'t always have the right answer',
       'Opposite Style': 'Supporter'
     },
-    personalThoughts: {
-      likes: [
-        "When something needs to happen, I make it happen",
-        "The people close to me know I'll always have their back",
-        "I know who I am and I don't need anyone's approval to feel that way"
-      ],
-      dislikes: [
-        "My directness sometimes lands harder than I intend, and people pull away",
-        "Sitting with someone else's opinion long enough to really hear it is hard for me",
-        "Incompetence and slow movement make me impatient in ways I know aren't always fair"
-      ],
-      neverDo: [
-        "Genuinely mean it when I say 'let's do it your way'",
-        "Keep my opinion to myself when I know something is wrong",
-        "Play to tie"
-      ],
-      howToRelate: [
-        "Hold your ground with me — I respect confidence, not compliance",
-        "Know that I have a softer side, even if I don't lead with it",
-        "Loyalty matters more to me than almost anything",
-        "My bluntness is never personal — it's just efficiency"
-      ],
-      peopleSay: [
-        "\"I can say exactly what I'm thinking around them. They actually want that.\"",
-        "\"They lead clearly and fairly. You always know where you stand.\"",
-        "\"They'll say the uncomfortable thing that everyone else is thinking but won't say.\""
-      ]
-    },
     affirmations: [
       "Good relationships are worth bending for.",
       "The first idea isn't always the best one — including mine.",
@@ -1034,38 +806,6 @@ const PERSONALITIES = {
       'Fear': 'Not being given real responsibility, and failure',
       'More Effective With': 'Structure and follow-through, understanding how processes work, and slowing down enough to put things in writing',
       'Opposite Style': 'Coordinator'
-    },
-    personalThoughts: {
-      likes: [
-        "I'm genuinely optimistic — problems don't knock me out for long",
-        "I go after the things that scare me a little. That's how I know they're worth it",
-        "I have a wide range of passions and I'm not afraid to pursue all of them",
-        "I lead with generosity"
-      ],
-      dislikes: [
-        "Inefficiency drives me crazy. I have very little patience for it",
-        "I sometimes perform a version of myself to make a good impression",
-        "There's never enough time to do everything I want to do",
-        "One-on-one intensity can feel confining to me after a while"
-      ],
-      neverDo: [
-        "Let a meeting run inefficiently when I could step in",
-        "Spend a week in complete silence",
-        "Finish every project before starting the next one",
-        "Plan my week in a spreadsheet and actually follow it"
-      ],
-      howToRelate: [
-        "Give me room to breathe — freedom and friendship go a long way with me",
-        "Keep me engaged with interesting conversation",
-        "Let me be a little extra sometimes — it's how I connect",
-        "Challenge me intellectually and make me laugh",
-        "Don't try to change me. Get to know me"
-      ],
-      peopleSay: [
-        "\"They make everyone feel like they matter.\"",
-        "\"When they're not doing something adventurous, they're helping someone else with something.\"",
-        "\"They're the person you call when you need to remember why life is good.\""
-      ]
     },
     affirmations: [
       "I'll build in actual time to slow down.",
@@ -1091,37 +831,6 @@ const PERSONALITIES = {
       'More Effective With': 'Better time management, emotional self-regulation, and following through on what they say they\'ll do',
       'Opposite Style': 'Observer'
     },
-    personalThoughts: {
-      likes: [
-        "I'm a people person and I know how to make others feel seen and valued",
-        "I can tell what someone needs before they say it",
-        "My generosity and sensitivity are things I'm genuinely proud of"
-      ],
-      dislikes: [
-        "I hold myself to a standard of caring that I can never quite reach",
-        "My inability to say no has cost me more than I like to admit",
-        "Giving a lot and getting little back is a pattern I keep falling into",
-        "The version of me people see is often the edited, more agreeable version"
-      ],
-      neverDo: [
-        "Tune out when someone close to me is struggling",
-        "Make a to-do list two weeks in advance, and then complete it",
-        "Walk past an animal that needed help",
-        "Let a favor go unacknowledged"
-      ],
-      howToRelate: [
-        "Actually listen when I talk",
-        "Let me know I matter to you",
-        "If you have to criticize me, do it gently",
-        "Find joy in the small stuff with me",
-        "Be present. Really present. That means more to me than almost anything"
-      ],
-      peopleSay: [
-        "\"They love the people in their life with everything they have.\"",
-        "\"Funny, warm, and quietly sharp. They notice things.\"",
-        "\"They love hard, and their people feel it. Their friendship feels like sunshine.\""
-      ]
-    },
     affirmations: [
       "My needs matter just as much as everyone else's.",
       "I'm allowed to ask for what I want.",
@@ -1145,36 +854,6 @@ const PERSONALITIES = {
       'Fear': 'Conflict, high pressure',
       'More Effective With': 'Honest feedback, knowing when to step back, and staying focused on getting the job done',
       'Opposite Style': 'Reformer'
-    },
-    personalThoughts: {
-      likes: [
-        "I know how to slow down and actually enjoy people and relationships",
-        "I can hold multiple perspectives without feeling the need to pick a side",
-        "My default is acceptance, not judgment",
-        "The world feels manageable to me, and I help others feel that way too"
-      ],
-      dislikes: [
-        "I'm not always sure what I actually want",
-        "I care too much about what people think, and feedback that feels critical can really sting",
-        "I can go too long without a clear direction and not even notice until I'm already lost"
-      ],
-      neverDo: [
-        "Start a fight at a family gathering on purpose",
-        "Be rude or aggressive toward someone who didn't deserve it",
-        "Announce my grievances to a group of colleagues",
-        "Fail to sympathize with a friend"
-      ],
-      howToRelate: [
-        "Let me finish my thought, even if it takes a minute",
-        "Don't hit me with something big out of nowhere",
-        "Don't rush my decision-making process",
-        "My flexibility isn't an invitation to walk over me"
-      ],
-      peopleSay: [
-        "\"Being around them feels easy. They just let you be who you are.\"",
-        "\"They care about the things worth caring about.\"",
-        "\"They make you feel like your pace is fine, whatever it is.\""
-      ]
     },
     affirmations: [
       "Living for myself isn't the same as not caring about others.",
@@ -1200,36 +879,6 @@ const PERSONALITIES = {
       'More Effective With': 'Willingness to speak up and share ideas; self-confidence built through positive reinforcement',
       'Opposite Style': 'Director'
     },
-    personalThoughts: {
-      likes: [
-        "I'm loyal, dependable, hardworking, and organized — and those things matter",
-        "I'm responsible and I take my commitments seriously",
-        "I'm smart, loyal, and I have a sense of humor that surprises people",
-        "I can get along with most people and feel in harmony with the world"
-      ],
-      dislikes: [
-        "Fear of getting it wrong can lead me to procrastinate more than I'd like",
-        "I worry about being overlooked or taken advantage of",
-        "My mind can spiral into worst-case scenarios faster than I'd like"
-      ],
-      neverDo: [
-        "Ignore a strange noise in the house and go back to sleep",
-        "Stop thinking about the shelf ornament I broke at a friend's house",
-        "Stop second-guessing an expensive purchase the minute I get home",
-        "Overwhelm someone with rude aggression"
-      ],
-      howToRelate: [
-        "Reassure me that I'm valued and considered",
-        "Don't frame my carefulness as a flaw",
-        "Let me finish what I have to say, even if it doesn't make sense to you",
-        "Don't rush me into anything new. Ease me in"
-      ],
-      peopleSay: [
-        "\"The most reliable, trustworthy, hardworking person I know.\"",
-        "\"I never feel that they are judging me; they are very patient and perceptive.\"",
-        "\"Nothing gets past them. They see it all, even if it seems like they don't.\""
-      ]
-    },
     affirmations: [
       "Taking risks is part of growing, and I can handle it.",
       "Worry is not the same as preparation.",
@@ -1254,39 +903,6 @@ const PERSONALITIES = {
       'More Effective With': 'Self-confidence, clear expectations, genuine appreciation, and a calm, structured environment',
       'Opposite Style': 'Motivator'
     },
-    personalThoughts: {
-      likes: [
-        "I'm responsible, hardworking, and I follow through",
-        "I'm very sharp and I notice things most people miss",
-        "I bring order to things that would otherwise be chaotic",
-        "I show up for the people and commitments in my life"
-      ],
-      dislikes: [
-        "Fear of getting it wrong makes me slower than I'd like to be",
-        "I can exhaust myself with 'what ifs' that never come true",
-        "I'm a bit of a perfectionist, and that slows me down more than it should",
-        "I wear myself out worrying about what might happen"
-      ],
-      neverDo: [
-        "Ignore a noise in the house at night",
-        "Forgive myself for breaking a friend's shelf ornament",
-        "Be sure that I had made the right decisions after buying an expensive item",
-        "Decide to make a career change without asking everyone else's opinion first"
-      ],
-      howToRelate: [
-        "Be clear, paced, and direct",
-        "Listen to everything I say",
-        "Don't criticize me for being fearful",
-        "Give me reassurance that you consider me",
-        "Be steady and systematic",
-        "Introduce me gradually to anything new"
-      ],
-      peopleSay: [
-        "\"They are the most reliable, trustworthy, and hardworking person I know.\"",
-        "\"They are intelligent, loyal and loveable and has never let me down.\"",
-        "\"They never miss a trick! They would make a good detective with that suspicious mind of theirs.\""
-      ]
-    },
     affirmations: [
       "I will learn to trust my own decisions.",
       "I will take more risks and not be afraid of making mistakes.",
@@ -1300,24 +916,15 @@ const PERSONALITIES = {
 // ─────────────────────────────────────────────
 let currentRound = 0;
 // rankings[round] = array of letter chars in current ranked order (top→bottom)
-let rankings = Array(10).fill(null).map(() => null);
+let rankings = Array(ROUNDS.length).fill(null).map(() => null);
 let sortableInstance = null;
-let studentName = '';
-let lastPrimaryProfiles = [];
 
 // ─────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────
 function startQuiz() {
-  const nameInput = document.getElementById('student-name');
-  studentName = nameInput.value.trim();
-  if (!studentName) {
-    alert('Please enter your name before beginning.');
-    nameInput.focus();
-    return;
-  }
   currentRound = 0;
-  rankings = Array(10).fill(null).map(() => null);
+  rankings = Array(ROUNDS.length).fill(null).map(() => null);
   showScreen('quiz-screen');
   renderRound(currentRound);
 }
@@ -1332,9 +939,9 @@ function showScreen(id) {
 // ─────────────────────────────────────────────
 function renderRound(idx) {
   const round = ROUNDS[idx];
-  const pct = Math.round(((idx + 1) / 10) * 100);
+  const pct = Math.round(((idx + 1) / ROUNDS.length) * 100);
 
-  document.getElementById('progress-text').textContent = `Round ${idx + 1} of 10`;
+  document.getElementById('progress-text').textContent = `Round ${idx + 1} of ${ROUNDS.length}`;
   document.getElementById('progress-pct').textContent = `${pct}%`;
   document.getElementById('progress-fill').style.width = `${pct}%`;
   document.getElementById('round-tag').textContent = round.tag;
@@ -1377,7 +984,7 @@ function renderRound(idx) {
 
   // Update nav buttons
   document.getElementById('prev-btn').style.visibility = idx === 0 ? 'hidden' : 'visible';
-  const isLast = idx === 9;
+  const isLast = idx === ROUNDS.length - 1;
   const nextBtn = document.getElementById('next-btn');
   nextBtn.textContent = isLast ? 'See My Results →' : 'Next Round →';
 }
@@ -1400,7 +1007,7 @@ function saveCurrentRanking() {
 
 function nextRound() {
   saveCurrentRanking();
-  if (currentRound < 9) {
+  if (currentRound < ROUNDS.length - 1) {
     currentRound++;
     renderRound(currentRound);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1437,7 +1044,7 @@ function calculateScores() {
 // ─────────────────────────────────────────────
 function showResults() {
   const scores = calculateScores();
-  const maxScore = 150; // 15 pts × 10 rounds
+  const maxScore = SCORE_MAP[0] * ROUNDS.length; // 15 pts × 5 rounds
 
   // Sort letters by score descending
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
@@ -1445,7 +1052,6 @@ function showResults() {
   const primaryEntries = sorted.filter(([, score]) => score === topScore);
   const primaryProfiles = primaryEntries.map(([letter]) => PERSONALITIES[letter]);
   const isTie = primaryProfiles.length > 1;
-  lastPrimaryProfiles = primaryProfiles;
 
   // ── Score grid
   const grid = document.getElementById('score-grid');
@@ -1482,34 +1088,10 @@ function showResults() {
     `).join('');
     const affirmHTML = primaryP.affirmations.map(a => `<li>${a}</li>`).join('');
     const descParagraphs = primaryP.fullDesc.split('\n\n').map(p => `<p>${p}</p>`).join('');
-    const pt = primaryP.personalThoughts;
-    const ptHTML = `
-      <div class="personal-thoughts">
-        <h3>Personal Thoughts</h3>
-        <div class="pt-section">
-          <h4>What I like about being a ${primaryP.archetype.replace('The ', '')}</h4>
-          <ul>${pt.likes.map(x => `<li>${x}</li>`).join('')}</ul>
-        </div>
-        <div class="pt-section">
-          <h4>What I don't like about being a ${primaryP.archetype.replace('The ', '')}</h4>
-          <ul>${pt.dislikes.map(x => `<li>${x}</li>`).join('')}</ul>
-        </div>
-        <div class="pt-section">
-          <h4>Things I would never do</h4>
-          <ul>${pt.neverDo.map(x => `<li>${x}</li>`).join('')}</ul>
-        </div>
-        <div class="pt-section">
-          <h4>How to relate with me</h4>
-          <ul>${pt.howToRelate.map(x => `<li>${x}</li>`).join('')}</ul>
-        </div>
-        <div class="pt-section">
-          <h4>Things people say about me</h4>
-          <ul>${pt.peopleSay.map(x => `<li>${x}</li>`).join('')}</ul>
-        </div>
-        <div class="affirmations">
-          <h4>Things to affirm to yourself</h4>
-          <ul>${affirmHTML}</ul>
-        </div>
+    const affirmationsHTML = `
+      <div class="affirmations">
+        <h4>Things to affirm to yourself</h4>
+        <ul>${affirmHTML}</ul>
       </div>
     `;
 
@@ -1523,7 +1105,7 @@ function showResults() {
         <div class="profile-body">
           ${descParagraphs}
           <div class="trait-grid">${traitsHTML}</div>
-          ${ptHTML}
+          ${affirmationsHTML}
         </div>
       </div>
     `;
@@ -1557,25 +1139,6 @@ function restartQuiz() {
   startQuiz();
 }
 
-function notifyInstructor() {
-  const btn = document.getElementById('notify-btn');
-  const status = document.getElementById('notify-status');
-  btn.disabled = true;
-  status.textContent = 'Sending...';
-
-  const personalityType = lastPrimaryProfiles.map(p => `${p.archetype} · ${p.colorName}`).join(' & ');
-
-  emailjs.send('service_17hkhte', 'template_i2p1669', {
-    student_name: studentName,
-    personality_type: personalityType
-  }).then(() => {
-    status.textContent = '✓ Sent! Your instructor has been notified.';
-  }, (err) => {
-    status.textContent = 'Something went wrong sending the notification. Please try again.';
-    btn.disabled = false;
-    console.error('EmailJS error:', err);
-  });
-}
 </script>
 </body>
 </html>
